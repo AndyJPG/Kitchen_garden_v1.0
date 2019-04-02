@@ -15,6 +15,7 @@
 		00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */; };
 		00E2EF9822531F6200F1BAE4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9722531F6200F1BAE4 /* UserInfo.swift */; };
 		00E2EF9A2253460D00F1BAE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF992253460D00F1BAE4 /* HomeViewController.swift */; };
+		00E2EF9C2253471500F1BAE4 /* PerferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		00E2EF8B22531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E2EF9722531F6200F1BAE4 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		00E2EF992253460D00F1BAE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerferenceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				00E2EF7622531C1300F1BAE4 /* LoginViewController.swift */,
 				00E2EF992253460D00F1BAE4 /* HomeViewController.swift */,
+				00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				00E2EF7722531C1300F1BAE4 /* LoginViewController.swift in Sources */,
 				00E2EF9822531F6200F1BAE4 /* UserInfo.swift in Sources */,
 				00E2EF7522531C1300F1BAE4 /* AppDelegate.swift in Sources */,
+				00E2EF9C2253471500F1BAE4 /* PerferenceViewController.swift in Sources */,
 				00E2EF9A2253460D00F1BAE4 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

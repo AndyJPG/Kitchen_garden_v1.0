@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateButtonState()
         let name = nameField.text ?? ""
-        guard let newUser = UserInfo(name: name, expectTime: 3, useSpace: 10) else {
+        guard let newUser = UserInfo(name: name, expectTime: 3, useSpace: ["0","0"]) else {
             fatalError("Unable to creat instains")
         }
         user = [newUser]
@@ -73,6 +73,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //Always have super prepare
         super.prepare(for: segue, sender: sender)
+        
+        switch (segue.identifier ?? "") {
+        case "exploreHomePage":
+            os_log("Navigate to home page", log: OSLog.default, type: .debug)
+            
+        case "preferenceSegue":
+            guard let perferenceVC = segue.destination as? PerferenceViewController else {
+                fatalError("Unexpected sender: \(segue.destination)")
+            }
+            perferenceVC.user = user[0]
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+        }
         
         
     }
