@@ -31,10 +31,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whO-Vm-yZv">
                                         <rect key="frame" x="35" y="44" width="130" height="30"/>
                                         <state key="normal" title="Start search plants"/>
+                                        <connections>
+                                            <segue destination="VUs-d0-ib4" kind="show" id="FKa-tj-cas"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyn-uJ-dV5">
                                         <rect key="frame" x="74" y="88" width="52" height="30"/>
                                         <state key="normal" title="Explore"/>
+                                        <connections>
+                                            <segue destination="Qzk-8x-Brg" kind="show" identifier="exploreHomePage" id="LFj-FG-If4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -42,9 +48,67 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="explore" destination="hyn-uJ-dV5" id="FIq-Yg-ibS"/>
+                        <outlet property="nameField" destination="mkt-AS-dFN" id="dk5-40-Va0"/>
+                        <outlet property="searchPlant" destination="whO-Vm-yZv" id="08C-Uf-kkt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="127" y="0.0"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="a67-8m-Mxz">
+            <objects>
+                <viewController id="VUs-d0-ib4" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1sI-i7-aY1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="OcY-Ap-Zxv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4xQ-04-Jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1121" y="-342"/>
+        </scene>
+        <!--Kitchen Farming-->
+        <scene sceneID="i7A-m0-OGy">
+            <objects>
+                <viewController id="saQ-D5-PIe" customClass="HomeViewController" customModule="Kitchen_garden_v0_3" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pkR-Sl-uVf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="bFq-ux-8IA"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Kitchen Farming" id="430-Za-gpK">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="rSH-eM-eYf"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hHl-bb-5Sm"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ly7-QS-jgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2062" y="559"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SCo-xB-Chm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qzk-8x-Brg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qZg-Cg-vyl">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="saQ-D5-PIe" kind="relationship" relationship="rootViewController" id="RF4-0W-d3D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CVl-lh-7CU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1121" y="558"/>
         </scene>
     </scenes>
 </document>

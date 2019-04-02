@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class UserInfo {
+class UserInfo: NSObject, NSCoding {
     
     //Properties
     var name: String
@@ -18,7 +18,7 @@ class UserInfo {
     
     //MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("users")
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("user")
     
     //MARK: Types
     struct PropertyKey {
