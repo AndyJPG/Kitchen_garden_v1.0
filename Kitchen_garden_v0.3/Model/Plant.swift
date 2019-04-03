@@ -19,13 +19,8 @@ class Plant {
     var maxHarvest: String
     
     //Initialization
-    init?(name: String, minSpace: String, maxSpace: String, minHarvest: String, maxHarvest: String){
-        
-        //Name bust not be empty
-        guard !name.isEmpty else {
-            return nil
-        }
-        
+    init(name: String, minSpace: String, maxSpace: String, minHarvest: String, maxHarvest: String){
+
         //Initialise property
         self.name = name
         self.minSpace = minSpace

@@ -13,6 +13,7 @@ class SearchTableViewCell: UITableViewCell {
     //MARK: Properties
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var harvestLabel: UILabel!
     @IBOutlet weak var pImage: UIImageView!
 
     override func awakeFromNib() {
