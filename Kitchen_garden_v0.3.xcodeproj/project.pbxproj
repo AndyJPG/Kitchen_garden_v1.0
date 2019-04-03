@@ -14,8 +14,12 @@
 		00E2EF7F22531C1500F1BAE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E2EF7D22531C1500F1BAE4 /* LaunchScreen.storyboard */; };
 		00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */; };
 		00E2EF9822531F6200F1BAE4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9722531F6200F1BAE4 /* UserInfo.swift */; };
-		00E2EF9A2253460D00F1BAE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF992253460D00F1BAE4 /* HomeViewController.swift */; };
 		00E2EF9C2253471500F1BAE4 /* PerferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */; };
+		00E2EF9E225383E700F1BAE4 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */; };
+		00E2EFA0225383FF00F1BAE4 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9F225383FF00F1BAE4 /* SearchTableViewController.swift */; };
+		00E2EFA22253841100F1BAE4 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EFA12253841100F1BAE4 /* HomeTableViewCell.swift */; };
+		00E2EFA42253841A00F1BAE4 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EFA32253841A00F1BAE4 /* SearchTableViewCell.swift */; };
+		00E2EFA62253856300F1BAE4 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EFA52253856300F1BAE4 /* Plant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +44,12 @@
 		00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kitchen_garden_v0_3Tests.swift; sourceTree = "<group>"; };
 		00E2EF8B22531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E2EF9722531F6200F1BAE4 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
-		00E2EF992253460D00F1BAE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerferenceViewController.swift; sourceTree = "<group>"; };
+		00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		00E2EF9F225383FF00F1BAE4 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		00E2EFA12253841100F1BAE4 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		00E2EFA32253841A00F1BAE4 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		00E2EFA52253856300F1BAE4 /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +115,10 @@
 			isa = PBXGroup;
 			children = (
 				00E2EF7622531C1300F1BAE4 /* LoginViewController.swift */,
-				00E2EF992253460D00F1BAE4 /* HomeViewController.swift */,
+				00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */,
+				00E2EFA12253841100F1BAE4 /* HomeTableViewCell.swift */,
+				00E2EF9F225383FF00F1BAE4 /* SearchTableViewController.swift */,
+				00E2EFA32253841A00F1BAE4 /* SearchTableViewCell.swift */,
 				00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */,
 			);
 			path = Control;
@@ -125,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				00E2EF9722531F6200F1BAE4 /* UserInfo.swift */,
+				00E2EFA52253856300F1BAE4 /* Plant.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,10 +243,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E2EF7722531C1300F1BAE4 /* LoginViewController.swift in Sources */,
+				00E2EFA62253856300F1BAE4 /* Plant.swift in Sources */,
+				00E2EFA0225383FF00F1BAE4 /* SearchTableViewController.swift in Sources */,
+				00E2EFA22253841100F1BAE4 /* HomeTableViewCell.swift in Sources */,
 				00E2EF9822531F6200F1BAE4 /* UserInfo.swift in Sources */,
 				00E2EF7522531C1300F1BAE4 /* AppDelegate.swift in Sources */,
+				00E2EFA42253841A00F1BAE4 /* SearchTableViewCell.swift in Sources */,
 				00E2EF9C2253471500F1BAE4 /* PerferenceViewController.swift in Sources */,
-				00E2EF9A2253460D00F1BAE4 /* HomeViewController.swift in Sources */,
+				00E2EF9E225383E700F1BAE4 /* HomeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
