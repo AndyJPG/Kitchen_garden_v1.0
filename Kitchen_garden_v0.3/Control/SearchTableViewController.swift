@@ -10,36 +10,51 @@ import UIKit
 import os.log
 import SQLite3
 
-class SearchTableViewController: UITableViewController {
+class SearchTableViewController: UITableViewController, UISearchControllerDelegate {
     
     //MARK: Properties
     var plants = [Plant]()
     var plantDB: OpaquePointer?
+    
+    //properties for search bar
+    var filteredPlants = [Plant]()
+    let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Search bar code
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Plant"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
 
-        //the database file
+        //Loading the database file
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("plant.tbd")
         
-        print("\(fileURL)")
-        //opening database
+        //Opening database
         if sqlite3_open(fileURL.path, &plantDB) != SQLITE_OK {
             print("error opening database")
         }
-
+        
+        //read data
         readValues()
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        //If filtered only show filtered data
+        if isFiltering() {
+            return filteredPlants.count
+        }
+        
         return plants.count
     }
 
@@ -47,13 +62,19 @@ class SearchTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Cell Identifier
         let cellIdentifier = "SearchTableViewCell"
+        var plant:Plant
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? SearchTableViewCell else {
             fatalError("The dequeued cell is not an instance of SearchTableViewCell.")
         }
 
         // Configure the cell
-        let plant = plants[indexPath.row]
+        if isFiltering() {
+            plant = filteredPlants[indexPath.row]
+        } else {
+            plant = plants[indexPath.row]
+        }
+        
         cell.nameLabel.text = plant.name
         cell.infoLabel.text = "Space: \(plant.minSpace) - \(plant.maxSpace)"
         cell.harvestLabel.text = "Harvest Time: \(plant.minHarvest) - \(plant.maxHarvest)"
@@ -140,5 +161,33 @@ class SearchTableViewController: UITableViewController {
         }
         
     }
+    
+    //MARK: Search bar update view method
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    
+    // MARK: - Private instance methods for search bar
+    private func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredPlants = plants.filter({( plant : Plant) -> Bool in
+            return plant.name.lowercased().contains(searchText.lowercased())
+        })
+        
+        tableView.reloadData()
+    }
 
+}
+
+//Search bar extension method
+extension SearchTableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
 }

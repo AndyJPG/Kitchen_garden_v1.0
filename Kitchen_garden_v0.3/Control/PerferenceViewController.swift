@@ -15,11 +15,12 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var harvestTextField: UITextField!
     @IBOutlet weak var spaceAvailable: UITextField!
     @IBOutlet weak var welcomLable: UILabel!
+    @IBOutlet weak var searchButton: UIButton!
     
     var user: UserInfo?
     //array for harvest time and space size
     let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
-    let spaceNumber = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"]
+    var spaceNumber = [String]()
     
     
     override func viewDidLoad() {
@@ -34,9 +35,15 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             welcomLable.text = "Welcome \(user.name)!"
         }
         
-        print("User time \(String(describing: user?.name))")
-        print("User time \(String(describing: user?.expectTime))")
-        print("User space \(String(describing: user?.useSpace[0])) , \(String(describing: user?.useSpace[1]))")
+        //Set space number picker row
+        var index = 5
+        while index <= 100 {
+            spaceNumber.append(String(index))
+            index += 5
+        }
+        
+        //update state
+        searchButtonState()
         
         //Create picker view
         createPickerView()
@@ -128,6 +135,30 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     {
             super.didReceiveMemoryWarning()
             // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: Text field method
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if harvestTextField.isFirstResponder {
+            spaceAvailable.isEnabled = false
+        } else {
+            harvestTextField.isEnabled = false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        spaceAvailable.isEnabled = true
+        harvestTextField.isEnabled = true
+        searchButtonState()
+    }
+    
+    //MARK: Search button state
+    private func searchButtonState()  {
+        if (spaceAvailable.text?.isEmpty ?? true) || (harvestTextField.text?.isEmpty ?? true) {
+            searchButton.isEnabled = false
+            } else {
+            searchButton.isEnabled = true
+        }
     }
     
 

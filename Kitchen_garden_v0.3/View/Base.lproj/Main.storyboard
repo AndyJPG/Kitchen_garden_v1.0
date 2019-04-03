@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WM6-PR-AsR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -125,7 +125,7 @@
                                         <rect key="frame" x="114.5" y="363" width="48" height="30"/>
                                         <state key="normal" title="Search"/>
                                         <connections>
-                                            <segue destination="VuC-CV-WaY" kind="show" identifier="goSearch" id="yJ6-Gr-giJ"/>
+                                            <segue destination="WM6-PR-AsR" kind="show" identifier="goSearch" id="yJ6-Gr-giJ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -136,6 +136,7 @@
                     </view>
                     <connections>
                         <outlet property="harvestTextField" destination="1sc-y3-NR4" id="L1c-Ku-GXQ"/>
+                        <outlet property="searchButton" destination="iwH-4v-nGT" id="L25-FE-PtD"/>
                         <outlet property="spaceAvailable" destination="nZK-6T-SMx" id="6eF-YU-ggi"/>
                         <outlet property="welcomLable" destination="pkd-I5-2i4" id="IPH-Mz-Efa"/>
                     </connections>
@@ -171,7 +172,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="4o7-67-0ar"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ks0-k4-wQo">
                             <connections>
-                                <segue destination="VuC-CV-WaY" kind="show" id="hXN-ok-f6Y"/>
+                                <segue destination="WM6-PR-AsR" kind="show" id="hXN-ok-f6Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -180,7 +181,7 @@
             </objects>
             <point key="canvasLocation" x="2062" y="478"/>
         </scene>
-        <!--Search Table View Controller-->
+        <!--Plants-->
         <scene sceneID="q0J-KG-Qfi">
             <objects>
                 <tableViewController id="VuC-CV-WaY" customClass="SearchTableViewController" customModule="Kitchen_garden_v0_3" customModuleProvider="target" sceneMemberID="viewController">
@@ -188,14 +189,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="ZoG-1I-wKM">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" rowHeight="80" id="ofr-sW-N9D" customClass="SearchTableViewCell" customModule="Kitchen_garden_v0_3" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ofr-sW-N9D" id="Z2K-xX-4Z9">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
@@ -244,10 +240,11 @@
                             <outlet property="delegate" destination="VuC-CV-WaY" id="8up-co-XFj"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Plants" id="5Y8-W2-1l3"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tt1-WZ-NPp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2916" y="-342.27886056971516"/>
+            <point key="canvasLocation" x="3855.1999999999998" y="-342.27886056971516"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BLa-gu-YQn">
@@ -266,6 +263,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ano-KH-Fc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1121" y="478"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xMt-Gl-q6F">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WM6-PR-AsR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wqE-S3-ypI">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VuC-CV-WaY" kind="relationship" relationship="rootViewController" id="5pY-v5-zSd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FRW-AK-Pm1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2916" y="-342.27886056971516"/>
         </scene>
     </scenes>
     <resources>
