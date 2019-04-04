@@ -35,14 +35,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v0.3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitchen_garden_v0.3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitchen_garden_v1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E2EF7422531C1300F1BAE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00E2EF7622531C1300F1BAE4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		00E2EF7922531C1300F1BAE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00E2EF7B22531C1500F1BAE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00E2EF7E22531C1500F1BAE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00E2EF8022531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v0.3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kitchen_garden_v0.3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kitchen_garden_v1.0Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kitchen_garden_v0_3Tests.swift; sourceTree = "<group>"; };
 		00E2EF8B22531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E2EF9722531F6200F1BAE4 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -77,8 +77,8 @@
 		00E2EF6822531C1300F1BAE4 = {
 			isa = PBXGroup;
 			children = (
-				00E2EF7322531C1300F1BAE4 /* Kitchen_garden_v0.3 */,
-				00E2EF8822531C1500F1BAE4 /* Kitchen_garden_v0.3Tests */,
+				00E2EF7322531C1300F1BAE4 /* Kitchen_garden_v1.0 */,
+				00E2EF8822531C1500F1BAE4 /* Kitchen_garden_v1.0Tests */,
 				00E2EF7222531C1300F1BAE4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,13 +86,13 @@
 		00E2EF7222531C1300F1BAE4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v0.3.app */,
-				00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v0.3Tests.xctest */,
+				00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v1.0.app */,
+				00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00E2EF7322531C1300F1BAE4 /* Kitchen_garden_v0.3 */ = {
+		00E2EF7322531C1300F1BAE4 /* Kitchen_garden_v1.0 */ = {
 			isa = PBXGroup;
 			children = (
 				00E2EF9622531D5A00F1BAE4 /* Model */,
@@ -103,16 +103,16 @@
 				00E2EF7D22531C1500F1BAE4 /* LaunchScreen.storyboard */,
 				00E2EF8022531C1500F1BAE4 /* Info.plist */,
 			);
-			path = Kitchen_garden_v0.3;
+			path = Kitchen_garden_v1.0;
 			sourceTree = "<group>";
 		};
-		00E2EF8822531C1500F1BAE4 /* Kitchen_garden_v0.3Tests */ = {
+		00E2EF8822531C1500F1BAE4 /* Kitchen_garden_v1.0Tests */ = {
 			isa = PBXGroup;
 			children = (
 				00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */,
 				00E2EF8B22531C1500F1BAE4 /* Info.plist */,
 			);
-			path = Kitchen_garden_v0.3Tests;
+			path = Kitchen_garden_v1.0Tests;
 			sourceTree = "<group>";
 		};
 		00E2EF9422531D3200F1BAE4 /* Control */ = {
@@ -150,9 +150,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v0.3 */ = {
+		00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v1.0 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E2EF8E22531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v0.3" */;
+			buildConfigurationList = 00E2EF8E22531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v1.0" */;
 			buildPhases = (
 				00E2EF6D22531C1300F1BAE4 /* Sources */,
 				00E2EF6E22531C1300F1BAE4 /* Frameworks */,
@@ -162,14 +162,14 @@
 			);
 			dependencies = (
 			);
-			name = Kitchen_garden_v0.3;
+			name = Kitchen_garden_v1.0;
 			productName = Kitchen_garden_v0.3;
-			productReference = 00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v0.3.app */;
+			productReference = 00E2EF7122531C1300F1BAE4 /* Kitchen_garden_v1.0.app */;
 			productType = "com.apple.product-type.application";
 		};
-		00E2EF8422531C1500F1BAE4 /* Kitchen_garden_v0.3Tests */ = {
+		00E2EF8422531C1500F1BAE4 /* Kitchen_garden_v1.0Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E2EF9122531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v0.3Tests" */;
+			buildConfigurationList = 00E2EF9122531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v1.0Tests" */;
 			buildPhases = (
 				00E2EF8122531C1500F1BAE4 /* Sources */,
 				00E2EF8222531C1500F1BAE4 /* Frameworks */,
@@ -180,9 +180,9 @@
 			dependencies = (
 				00E2EF8722531C1500F1BAE4 /* PBXTargetDependency */,
 			);
-			name = Kitchen_garden_v0.3Tests;
+			name = Kitchen_garden_v1.0Tests;
 			productName = Kitchen_garden_v0.3Tests;
-			productReference = 00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v0.3Tests.xctest */;
+			productReference = 00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -204,7 +204,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 00E2EF6C22531C1300F1BAE4 /* Build configuration list for PBXProject "Kitchen_garden_v0.3" */;
+			buildConfigurationList = 00E2EF6C22531C1300F1BAE4 /* Build configuration list for PBXProject "Kitchen_garden_v1.0" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -217,8 +217,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v0.3 */,
-				00E2EF8422531C1500F1BAE4 /* Kitchen_garden_v0.3Tests */,
+				00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v1.0 */,
+				00E2EF8422531C1500F1BAE4 /* Kitchen_garden_v1.0Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -275,7 +275,7 @@
 /* Begin PBXTargetDependency section */
 		00E2EF8722531C1500F1BAE4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v0.3 */;
+			target = 00E2EF7022531C1300F1BAE4 /* Kitchen_garden_v1.0 */;
 			targetProxy = 00E2EF8622531C1500F1BAE4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -422,12 +422,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7EEA2UDA9;
-				INFOPLIST_FILE = Kitchen_garden_v0.3/Info.plist;
+				INFOPLIST_FILE = Kitchen_garden_v1.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.andyjiang.Kitchen-garden-v0-3";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.andyjiang.Kitchen-garden-v1.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -440,12 +440,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7EEA2UDA9;
-				INFOPLIST_FILE = Kitchen_garden_v0.3/Info.plist;
+				INFOPLIST_FILE = Kitchen_garden_v1.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.andyjiang.Kitchen-garden-v0-3";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.andyjiang.Kitchen-garden-v1.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -469,7 +469,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitchen_garden_v0.3.app/Kitchen_garden_v0.3";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitchen_garden_v1.0.app/Kitchen_garden_v1.0";
 			};
 			name = Debug;
 		};
@@ -490,14 +490,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitchen_garden_v0.3.app/Kitchen_garden_v0.3";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitchen_garden_v1.0.app/Kitchen_garden_v1.0";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E2EF6C22531C1300F1BAE4 /* Build configuration list for PBXProject "Kitchen_garden_v0.3" */ = {
+		00E2EF6C22531C1300F1BAE4 /* Build configuration list for PBXProject "Kitchen_garden_v1.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E2EF8C22531C1500F1BAE4 /* Debug */,
@@ -506,7 +506,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E2EF8E22531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v0.3" */ = {
+		00E2EF8E22531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v1.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E2EF8F22531C1500F1BAE4 /* Debug */,
@@ -515,7 +515,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E2EF9122531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v0.3Tests" */ = {
+		00E2EF9122531C1500F1BAE4 /* Build configuration list for PBXNativeTarget "Kitchen_garden_v1.0Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E2EF9222531C1500F1BAE4 /* Debug */,
