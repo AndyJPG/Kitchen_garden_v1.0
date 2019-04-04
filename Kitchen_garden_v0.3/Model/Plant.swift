@@ -27,7 +27,6 @@ class Plant {
         self.maxSpace = maxSpace
         self.minHarvest = minHarvest
         self.maxHarvest = maxHarvest
-        
     }
     
 }

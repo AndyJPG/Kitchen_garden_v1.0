@@ -75,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.prepare(for: segue, sender: sender)
         
         switch (segue.identifier ?? "") {
-        case "exploreHomePage":
+        case "goHomePage":
             os_log("Navigate to home page", log: OSLog.default, type: .debug)
             
         case "preferenceSegue":

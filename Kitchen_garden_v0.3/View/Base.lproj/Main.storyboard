@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WM6-PR-AsR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,15 +22,15 @@
                                 <rect key="frame" x="87" y="309" width="200" height="118"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your perfer name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-AS-dFN">
+                                    <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your preferred name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-AS-dFN">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whO-Vm-yZv">
-                                        <rect key="frame" x="35" y="44" width="130" height="30"/>
-                                        <state key="normal" title="Start search plants"/>
+                                        <rect key="frame" x="53" y="44" width="94" height="30"/>
+                                        <state key="normal" title="Search plants"/>
                                         <connections>
                                             <segue destination="VUs-d0-ib4" kind="show" identifier="preferenceSegue" id="FKa-tj-cas"/>
                                         </connections>
@@ -39,7 +39,7 @@
                                         <rect key="frame" x="74" y="88" width="52" height="30"/>
                                         <state key="normal" title="Explore"/>
                                         <connections>
-                                            <segue destination="DnG-tm-kCP" kind="show" id="Jzh-dw-jfM"/>
+                                            <segue destination="DnG-tm-kCP" kind="show" identifier="goHomePage" id="Jzh-dw-jfM"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -8,19 +8,18 @@
 
 import UIKit
 import os.log
-import SQLite3
 
 class SearchTableViewController: UITableViewController, UISearchControllerDelegate {
     
     //MARK: Properties
     var plants = [Plant]()
-    var plantDB: OpaquePointer?
     
     //properties for search bar
     var filteredPlants = [Plant]()
     let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         //Search bar code
@@ -31,16 +30,55 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
-        //Loading the database file
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("plant.tbd")
-        
-        //Opening database
-        if sqlite3_open(fileURL.path, &plantDB) != SQLITE_OK {
-            print("error opening database")
-        }
-        
         //read data
-        readValues()
+        parsingJson()
+
+    }
+    
+    //MARK: Get json connection
+    func parsingJson() {
+
+        guard let url = URL(string: "http://3.84.249.169/serviceTime.php") else {return}
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let dataResponse = data,
+                error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return }
+            do{
+                
+                //here dataResponse received from a network request
+                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
+                print(jsonResponse) //Response result
+
+                guard let jsonArray = jsonResponse as? [[String: Any]] else {
+                    return
+                }
+                print(jsonArray)
+
+                //store all plants
+                for dic in jsonArray {
+                    guard let name = dic["CropName"] as? String else {return}
+                    guard let minSpace = dic["Min Space (in cms)"] as? String else {
+                        return
+                    }
+                    guard let maxSpace = dic["Max Space (In cms)"] as? String else {return}
+                    guard let minHarvest = dic["Min Harvest time (Weeks)"] as? String else {return}
+                    guard let maxHarvest = dic["Max harvest time (Weeks)"] as? String else {return}
+                    
+                    let newPlant = Plant(name: name, minSpace: minSpace, maxSpace: maxSpace, minHarvest: minHarvest, maxHarvest: maxHarvest)
+                    self.plants.append(newPlant)
+                }
+                
+                self.tableView.reloadData()
+
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
+
+        }
+        task.resume()
+
     }
 
     // MARK: - Table view data source
@@ -74,7 +112,7 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         } else {
             plant = plants[indexPath.row]
         }
-        
+                
         cell.nameLabel.text = plant.name
         cell.infoLabel.text = "Space need: \(plant.minSpace) cm - \(plant.maxSpace) cm"
         cell.harvestLabel.text = "Harvest Time: \(plant.minHarvest) - \(plant.maxHarvest) Weeks"
@@ -141,41 +179,6 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         let selectedPlant = plants[indexPath.row]
         detailVC.plant = selectedPlant
-        
-    }
-    
-    
-    //MARK: Private method
-    private func readValues() {
-        
-        //first empty the list of heroes
-        plants.removeAll()
-        
-        //this is our select query
-        let queryString = "SELECT * FROM plant"
-        
-        //statement pointer
-        var stmt:OpaquePointer?
-        
-        //preparing the query
-        if sqlite3_prepare(plantDB, queryString, -1, &stmt, nil) != SQLITE_OK{
-            let errmsg = String(cString: sqlite3_errmsg(plantDB)!)
-            print("error preparing insert: \(errmsg)")
-            return
-        }
-        
-        
-        //traversing through all the records
-        while(sqlite3_step(stmt) == SQLITE_ROW){
-            let name = String(cString: sqlite3_column_text(stmt, 0))
-            let minSpace = String(cString: sqlite3_column_text(stmt, 1))
-            let maxSpace = String(cString: sqlite3_column_text(stmt, 2))
-            let minHarvestTime = String(cString: sqlite3_column_text(stmt, 3))
-            let maxHarvestTime = String(cString: sqlite3_column_text(stmt, 4))
-            
-            //adding values to list
-            plants.append(Plant(name: name, minSpace: minSpace, maxSpace: maxSpace, minHarvest: minHarvestTime, maxHarvest: maxHarvestTime))
-        }
         
     }
     
