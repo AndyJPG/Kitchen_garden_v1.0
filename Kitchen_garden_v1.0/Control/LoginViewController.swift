@@ -53,21 +53,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         user = [newUser]
         saveUserInfo()
     }
-
-    //MARK: save and load user data
-    private func saveUserInfo() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(user, toFile: UserInfo.ArchiveURL.path)
-        
-        if isSuccessfulSave {
-            os_log("User info successfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save user info...", log: OSLog.default, type: .error)
-        }
-    }
-    
-    private func loadUser() -> [UserInfo]? {
-        return NSKeyedUnarchiver.unarchiveObject(withFile: UserInfo.ArchiveURL.path) as? [UserInfo]
-    }
     
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -96,6 +81,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let text = nameField.text ?? ""
         explore.isEnabled = !text.isEmpty
         searchPlant.isEnabled = !text.isEmpty
+    }
+    
+    //MARK: Private save and load user data
+    private func saveUserInfo() {
+        let data = try? NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
+        UserDefaults.standard.set(data, forKey: "user")
+    }
+    
+    private func loadUser() -> [UserInfo]?  {
+        guard let data = UserDefaults.standard.data(forKey: "user") else {
+            return nil
+        }
+        return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [UserInfo]
     }
 }
 

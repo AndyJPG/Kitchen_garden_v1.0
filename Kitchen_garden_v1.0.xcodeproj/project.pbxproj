@@ -120,12 +120,9 @@
 			children = (
 				00E2EF7622531C1300F1BAE4 /* LoginViewController.swift */,
 				00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */,
-				00E2F02D2254F6B000F1BAE4 /* DetailViewController.swift */,
-				00E2F02F2255A00B00F1BAE4 /* DetailCollectionViewCell.swift */,
-				00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */,
-				00E2EFA12253841100F1BAE4 /* HomeTableViewCell.swift */,
-				00E2EF9F225383FF00F1BAE4 /* SearchTableViewController.swift */,
-				00E2EFA32253841A00F1BAE4 /* SearchTableViewCell.swift */,
+				00E2F0332256301E00F1BAE4 /* Detail View */,
+				00E2F0322256300800F1BAE4 /* Home View */,
+				00E2F03122562FF600F1BAE4 /* Search View */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -145,6 +142,33 @@
 				00E2EFA52253856300F1BAE4 /* Plant.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		00E2F03122562FF600F1BAE4 /* Search View */ = {
+			isa = PBXGroup;
+			children = (
+				00E2EF9F225383FF00F1BAE4 /* SearchTableViewController.swift */,
+				00E2EFA32253841A00F1BAE4 /* SearchTableViewCell.swift */,
+			);
+			path = "Search View";
+			sourceTree = "<group>";
+		};
+		00E2F0322256300800F1BAE4 /* Home View */ = {
+			isa = PBXGroup;
+			children = (
+				00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */,
+				00E2EFA12253841100F1BAE4 /* HomeTableViewCell.swift */,
+			);
+			path = "Home View";
+			sourceTree = "<group>";
+		};
+		00E2F0332256301E00F1BAE4 /* Detail View */ = {
+			isa = PBXGroup;
+			children = (
+				00E2F02D2254F6B000F1BAE4 /* DetailViewController.swift */,
+				00E2F02F2255A00B00F1BAE4 /* DetailCollectionViewCell.swift */,
+			);
+			path = "Detail View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
