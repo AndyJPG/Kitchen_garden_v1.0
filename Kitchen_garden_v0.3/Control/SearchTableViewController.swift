@@ -76,8 +76,8 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         }
         
         cell.nameLabel.text = plant.name
-        cell.infoLabel.text = "Space: \(plant.minSpace) - \(plant.maxSpace)"
-        cell.harvestLabel.text = "Harvest Time: \(plant.minHarvest) - \(plant.maxHarvest)"
+        cell.infoLabel.text = "Space need: \(plant.minSpace) cm - \(plant.maxSpace) cm"
+        cell.harvestLabel.text = "Harvest Time: \(plant.minHarvest) - \(plant.maxHarvest) Weeks"
 
         return cell
     }
@@ -118,15 +118,32 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        super.prepare(for: segue, sender: sender)
+        
+        guard let detailVC = segue.destination as? DetailViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+        
+        guard let selectedPlantCell = sender as? SearchTableViewCell else {
+            fatalError("Unexpected sender: \(String(describing: sender))")
+        }
+        
+        guard let indexPath = tableView.indexPath(for: selectedPlantCell) else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
+        
+        
+        let selectedPlant = plants[indexPath.row]
+        detailVC.plant = selectedPlant
+        
     }
-    */
+    
     
     //MARK: Private method
     private func readValues() {
@@ -166,7 +183,6 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
-    
     
     // MARK: - Private instance methods for search bar
     private func searchBarIsEmpty() -> Bool {
