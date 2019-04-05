@@ -19,24 +19,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="nWq-uG-GTd">
-                                <rect key="frame" x="87" y="309" width="200" height="118"/>
+                                <rect key="frame" x="87" y="279" width="200" height="108.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p07-6B-GvA">
+                                        <rect key="frame" x="79" y="0.0" width="42" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your preferred name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mkt-AS-dFN">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
+                                        <rect key="frame" x="0.0" y="34.5" width="200" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whO-Vm-yZv">
-                                        <rect key="frame" x="53" y="44" width="94" height="30"/>
-                                        <state key="normal" title="Search plants"/>
-                                        <connections>
-                                            <segue destination="jF0-GA-A37" kind="show" identifier="preferenceSegue" id="FKa-tj-cas"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyn-uJ-dV5">
-                                        <rect key="frame" x="74" y="88" width="52" height="30"/>
+                                        <rect key="frame" x="74" y="78.5" width="52" height="30"/>
                                         <state key="normal" title="Explore"/>
                                         <connections>
                                             <segue destination="DnG-tm-kCP" kind="show" identifier="goHomePage" id="Jzh-dw-jfM"/>
@@ -51,12 +50,12 @@
                     <connections>
                         <outlet property="explore" destination="hyn-uJ-dV5" id="FIq-Yg-ibS"/>
                         <outlet property="nameField" destination="mkt-AS-dFN" id="dk5-40-Va0"/>
-                        <outlet property="searchPlant" destination="whO-Vm-yZv" id="08C-Uf-kkt"/>
+                        <outlet property="welcomeLabel" destination="p07-6B-GvA" id="tdr-L2-abA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="0.0"/>
+            <point key="canvasLocation" x="561" y="-342"/>
         </scene>
         <!--Perference View Controller-->
         <scene sceneID="a67-8m-Mxz">
@@ -66,55 +65,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="K2H-dQ-xlw">
-                                <rect key="frame" x="49" y="137" width="277" height="393"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="K2H-dQ-xlw">
+                                <rect key="frame" x="49" y="151" width="277" height="365.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="T5F-T0-atL">
-                                        <rect key="frame" x="28" y="0.0" width="221.5" height="48"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please choose one option" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8a-eS-nWw">
+                                        <rect key="frame" x="0.0" y="0.0" width="197" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="KXH-ah-tTK">
+                                        <rect key="frame" x="0.0" y="80.5" width="263" height="67.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkd-I5-2i4">
-                                                <rect key="frame" x="92.5" y="0.0" width="36.5" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please choose one search method" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBI-W8-Yt0">
+                                                <rect key="frame" x="0.0" y="0.0" width="263" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your perference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8a-eS-nWw">
-                                                <rect key="frame" x="0.0" y="27.5" width="221.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="KXH-ah-tTK">
-                                        <rect key="frame" x="40" y="108" width="197.5" height="67.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Time to Harvest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBI-W8-Yt0">
-                                                <rect key="frame" x="0.0" y="0.0" width="197.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number of weeks" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1sc-y3-NR4">
-                                                <rect key="frame" x="23.5" y="37.5" width="150" height="30"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Choose one search option" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1sc-y3-NR4">
+                                                <rect key="frame" x="0.0" y="37.5" width="190" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="e7h-Pn-wRN">
-                                        <rect key="frame" x="0.0" y="235.5" width="277" height="67.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="e7h-Pn-wRN">
+                                        <rect key="frame" x="0.0" y="208" width="277" height="67.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimate Available space for farming" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsY-kn-fbk">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimate Available space for farming" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsY-kn-fbk">
                                                 <rect key="frame" x="0.0" y="0.0" width="277" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="160" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number in centimeter" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZK-6T-SMx">
-                                                <rect key="frame" x="58.5" y="37.5" width="160" height="30"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="190" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZK-6T-SMx">
+                                                <rect key="frame" x="0.0" y="37.5" width="190" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -122,7 +110,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwH-4v-nGT">
-                                        <rect key="frame" x="114.5" y="363" width="48" height="30"/>
+                                        <rect key="frame" x="0.0" y="335.5" width="48" height="30"/>
                                         <state key="normal" title="Search"/>
                                         <connections>
                                             <segue destination="WM6-PR-AsR" kind="show" identifier="goSearch" id="yJ6-Gr-giJ"/>
@@ -142,15 +130,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="harvestTextField" destination="1sc-y3-NR4" id="L1c-Ku-GXQ"/>
+                        <outlet property="optionInput" destination="nZK-6T-SMx" id="PLy-k7-jwc"/>
+                        <outlet property="optionLabel" destination="hsY-kn-fbk" id="KFV-AB-gEe"/>
                         <outlet property="searchButton" destination="iwH-4v-nGT" id="L25-FE-PtD"/>
-                        <outlet property="spaceAvailable" destination="nZK-6T-SMx" id="6eF-YU-ggi"/>
-                        <outlet property="welcomLable" destination="pkd-I5-2i4" id="IPH-Mz-Efa"/>
+                        <outlet property="searchOptions" destination="1sc-y3-NR4" id="gpH-k1-BhH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4xQ-04-Jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2375.1999999999998" y="-342.27886056971516"/>
+            <point key="canvasLocation" x="2988" y="-342"/>
         </scene>
         <!--Kitchen Farming-->
         <scene sceneID="7d7-OQ-pyt">
@@ -208,14 +196,14 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="4o7-67-0ar"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ks0-k4-wQo">
                             <connections>
-                                <segue destination="WM6-PR-AsR" kind="show" identifier="homeToSearch" id="hXN-ok-f6Y"/>
+                                <segue destination="jF0-GA-A37" kind="show" identifier="homeToSearch" id="lIJ-Si-tRA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOM-EW-v1N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2061.5999999999999" y="477.21139430284859"/>
+            <point key="canvasLocation" x="1431" y="476"/>
         </scene>
         <!--Plants Search-->
         <scene sceneID="q0J-KG-Qfi">
@@ -410,7 +398,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ano-KH-Fc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1121" y="478"/>
+            <point key="canvasLocation" x="562" y="477"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xMt-Gl-q6F">
@@ -464,10 +452,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1s7-V2-hTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1436" y="-342.27886056971516"/>
+            <point key="canvasLocation" x="2180" y="-342"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="hXN-ok-f6Y"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -12,7 +12,7 @@
 		00E2EF7A22531C1300F1BAE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E2EF7822531C1300F1BAE4 /* Main.storyboard */; };
 		00E2EF7C22531C1500F1BAE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00E2EF7B22531C1500F1BAE4 /* Assets.xcassets */; };
 		00E2EF7F22531C1500F1BAE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E2EF7D22531C1500F1BAE4 /* LaunchScreen.storyboard */; };
-		00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */; };
+		00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.swift */; };
 		00E2EF9822531F6200F1BAE4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9722531F6200F1BAE4 /* UserInfo.swift */; };
 		00E2EF9C2253471500F1BAE4 /* PerferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */; };
 		00E2EF9E225383E700F1BAE4 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E2EF9D225383E700F1BAE4 /* HomeTableViewController.swift */; };
@@ -43,7 +43,7 @@
 		00E2EF7E22531C1500F1BAE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00E2EF8022531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E2EF8522531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kitchen_garden_v1.0Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kitchen_garden_v0_3Tests.swift; sourceTree = "<group>"; };
+		00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kitchen_garden_v1.0Tests.swift; sourceTree = "<group>"; };
 		00E2EF8B22531C1500F1BAE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E2EF9722531F6200F1BAE4 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		00E2EF9B2253471500F1BAE4 /* PerferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerferenceViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		00E2EF8822531C1500F1BAE4 /* Kitchen_garden_v1.0Tests */ = {
 			isa = PBXGroup;
 			children = (
-				00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift */,
+				00E2EF8922531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.swift */,
 				00E2EF8B22531C1500F1BAE4 /* Info.plist */,
 			);
 			path = Kitchen_garden_v1.0Tests;
@@ -290,7 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v0_3Tests.swift in Sources */,
+				00E2EF8A22531C1500F1BAE4 /* Kitchen_garden_v1.0Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

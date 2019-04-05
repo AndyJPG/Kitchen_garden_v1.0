@@ -12,28 +12,24 @@ import os.log
 class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     //MARK: Properties
-    @IBOutlet weak var harvestTextField: UITextField!
-    @IBOutlet weak var spaceAvailable: UITextField!
-    @IBOutlet weak var welcomLable: UILabel!
+    @IBOutlet weak var searchOptions: UITextField!
+    @IBOutlet weak var optionInput: UITextField!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var optionLabel: UILabel!
     
     var user: UserInfo?
     //array for harvest time and space size
     let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
     var spaceNumber = [String]()
+    let options = ["By harvest time", "By available space", "All"]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //Delegate
-        harvestTextField.delegate = self
-        spaceAvailable.delegate = self
- 
-        //Set welcome massage also see if data transfered
-        if let user = user {
-            welcomLable.text = "Welcome \(user.name)!"
-        }
+        searchOptions.delegate = self
+        optionInput.delegate = self
         
         //Set space number picker row
         var index = 5
@@ -44,6 +40,9 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         //update state
         searchButtonState()
+        
+        //hidden options
+        updateHiddenOption()
         
         //Create picker view
         createPickerView()
@@ -56,8 +55,8 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         //set delegate
         pickerView.delegate = self
-        harvestTextField.inputView = pickerView
-        spaceAvailable.inputView = pickerView
+        searchOptions.inputView = pickerView
+        optionInput.inputView = pickerView
         
         //Create picker button
         let toolBar = UIToolbar()
@@ -70,61 +69,86 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         // Add flexible space to move done button to right
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolBar.setItems([flexibleSpace,doneButton], animated: false)
-        harvestTextField.inputAccessoryView = toolBar
-        spaceAvailable.inputAccessoryView = toolBar
+        
+        searchOptions.inputAccessoryView = toolBar
+        optionInput.inputAccessoryView = toolBar
     }
     
     //MARK: Action picker
     //Set number of column
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if harvestTextField.isFirstResponder {
+        if searchOptions.isFirstResponder {
             return 1
-        } else if spaceAvailable.isFirstResponder {
-            return 2
+        } else if optionInput.isFirstResponder {
+            if searchOptions.text == "By harvest time" {
+                return 1
+            } else {
+                return 2
+            }
         }
         return 0
     }
     
     //Set number of row
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if harvestTextField.isFirstResponder {
-            return dateForHarvest.count
-        } else if spaceAvailable.isFirstResponder {
-            return spaceNumber.count
+        if searchOptions.isFirstResponder {
+            return options.count
+        } else if optionInput.isFirstResponder {
+            if searchOptions.text == "By harvest time" {
+                return dateForHarvest.count
+            } else {
+                return spaceNumber.count
+            }
         }
         return 0
     }
     
     //Set picker title for row
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if harvestTextField.isFirstResponder {
-            return dateForHarvest[row].brief
-        } else if spaceAvailable.isFirstResponder {
-            return spaceNumber[row]
+        if searchOptions.isFirstResponder {
+            return options[row]
+        } else if optionInput.isFirstResponder {
+            if searchOptions.text == "By harvest time" {
+                return dateForHarvest[row].brief
+            } else {
+                return spaceNumber[row]
+            }
         }
         return nil
     }
     
     //Select a row and assign value to user
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if harvestTextField.isFirstResponder {
-            let selectedTime = dateForHarvest[row]
-            harvestTextField.text = selectedTime.brief
-            user?.expectTime = selectedTime.time
+        if searchOptions.isFirstResponder {
             
-        } else if spaceAvailable.isFirstResponder {
-            let width =  spaceNumber[pickerView.selectedRow(inComponent: 0)]
-            let long = spaceNumber[pickerView.selectedRow(inComponent: 1)]
-            spaceAvailable.text =   width + " x " + long
-            user?.useSpace = [width, long]
+            let selectedOption = options[row]
+            searchOptions.text = selectedOption
+            
+        } else if optionInput.isFirstResponder {
+            
+            if searchOptions.text == "By harvest time" {
+                let pickedDate = dateForHarvest[pickerView.selectedRow(inComponent: 0)]
+                optionInput.text = pickedDate.brief
+                user?.expectTime = pickedDate.time
+            } else {
+                let width =  spaceNumber[pickerView.selectedRow(inComponent: 0)]
+                let long = spaceNumber[pickerView.selectedRow(inComponent: 1)]
+                optionInput.text =   width + " x " + long
+                user?.useSpace = [width, long]
+            }
+            
         }
         
     }
     
     //Dismiss picker view
     @objc func doneButtonTapped(){
-        harvestTextField.resignFirstResponder()
-        spaceAvailable.resignFirstResponder()
+        if searchOptions.isFirstResponder {
+            searchOptions.resignFirstResponder()
+        } else {
+            optionInput.resignFirstResponder()
+        }
+        updateHiddenOption()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -139,25 +163,55 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     //MARK: Text field method
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if harvestTextField.isFirstResponder {
-            spaceAvailable.isEnabled = false
+        if searchOptions.isFirstResponder {
+            optionInput.isEnabled = false
+            optionInput.text = ""
+            optionLabel.isHidden = true
+            optionInput.isHidden = true
         } else {
-            harvestTextField.isEnabled = false
+            searchOptions.isEnabled = false
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        spaceAvailable.isEnabled = true
-        harvestTextField.isEnabled = true
+        if searchOptions.text != "All" {
+            searchOptions.isEnabled = true
+            optionInput.isEnabled = true
+        }
         searchButtonState()
     }
     
     //MARK: Search button state
     private func searchButtonState()  {
-        if (spaceAvailable.text?.isEmpty ?? true) || (harvestTextField.text?.isEmpty ?? true) {
-            searchButton.isEnabled = false
-            } else {
+        if searchOptions.text == "All" {
             searchButton.isEnabled = true
+        } else if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
+            searchButton.isEnabled = false
+        } else {
+            searchButton.isEnabled = true
+        }
+    }
+    
+    private func updateHiddenOption() {
+        optionLabel.isHidden = true
+        optionInput.isHidden = true
+        
+        let option = searchOptions.text
+        //updatae hidden option
+        switch option {
+        case "By harvest time":
+            optionLabel.text = "Choose expected harvest time"
+            optionInput.placeholder = "pick expected harvest time"
+            optionLabel.isHidden = false
+            optionInput.isHidden = false
+        case "By available space":
+            optionLabel.text = "Choose available space size"
+            optionInput.placeholder = "pick available space size"
+            optionLabel.isHidden = false
+            optionInput.isHidden = false
+        default:
+            optionLabel.isHidden = true
+            optionInput.isHidden = true
         }
     }
     

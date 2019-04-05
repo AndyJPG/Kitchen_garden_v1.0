@@ -13,9 +13,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Properties
     var user = [UserInfo]()
-    @IBOutlet weak var searchPlant: UIButton!
     @IBOutlet weak var explore: UIButton!
     @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var welcomeLabel: UILabel!
     
 
     override func viewDidLoad() {
@@ -28,6 +28,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             user = userInfo
         }
         
+        welcomeLabel.text = "Please enter your name"
+        
         updateButtonState()
     }
     
@@ -35,7 +37,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // Disable the buttons while editing.
         explore.isEnabled = false
-        searchPlant.isEnabled = false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -57,22 +58,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //Always have super prepare
-        super.prepare(for: segue, sender: sender)
-        
-        switch (segue.identifier ?? "") {
-        case "goHomePage":
-            os_log("Navigate to home page", log: OSLog.default, type: .debug)
-            
-        case "preferenceSegue":
-            guard let perferenceVC = segue.destination as? PerferenceViewController else {
-                fatalError("Unexpected sender: \(segue.destination)")
-            }
-            perferenceVC.user = user[0]
-            
-        default:
-            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
-        }
-        
+//        super.prepare(for: segue, sender: sender)
+//
+//        switch (segue.identifier ?? "") {
+//        case "goHomePage":
+//            os_log("Navigate to home page", log: OSLog.default, type: .debug)
+//
+//        case "preferenceSegue":
+//            guard let nv = segue.destination as? UINavigationController else {
+//                fatalError("Unexpected sender: \(segue.destination)")
+//            }
+//            
+//            guard let preNV = nv.topViewController as? PerferenceViewController else {
+//                fatalError("Unexpected sender: \(nv)")
+//            }
+//
+//            preNV.user = user[0]
+//
+//        default:
+//            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+//        }
+//
         
     }
     
@@ -80,7 +86,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func updateButtonState() {
         let text = nameField.text ?? ""
         explore.isEnabled = !text.isEmpty
-        searchPlant.isEnabled = !text.isEmpty
     }
     
     //MARK: Private save and load user data

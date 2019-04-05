@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Kitchen_garden_v0_3
+@testable import Kitchen_garden_v1_0
 
 class Kitchen_garden_v0_3Tests: XCTestCase {
 
