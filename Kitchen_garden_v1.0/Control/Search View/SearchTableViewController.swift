@@ -13,6 +13,9 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
     
     //MARK: Properties
     var plants = [Plant]()
+    var filter: String?
+    var user: UserInfo?
+    let plantURL = URL(string: "http://3.84.249.169/serviceTime.php")
     
     //properties for search bar
     var filteredPlants = [Plant]()
@@ -29,56 +32,58 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         searchController.searchBar.placeholder = "Search Plant"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-
+        
+        //needs to delete
+//        filter = "space"
+//        user = UserInfo(name: "andy", expectTime: ["0","50"], useSpace: ["0","10"])
+        
         //read data
         parsingJson()
+        
+        while plants.isEmpty {
+            tableView.reloadData()
+        }
 
     }
     
     //MARK: Get json connection
     func parsingJson() {
-
-        guard let url = URL(string: "http://3.84.249.169/serviceTime.php") else {return}
-
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let dataResponse = data,
-                error == nil else {
-                    print(error?.localizedDescription ?? "Response Error")
-                    return }
-            do{
+        guard let downLoadUrl = plantURL else {return}
+        URLSession.shared.dataTask(with: downLoadUrl) { data, urlResponse, error in
+            guard let data = data, error == nil, urlResponse != nil else {
+                print("connection wrong")
+                return
+            }
+            print("downloaded")
+            do
+            {
+                //get json response
+                let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
                 
-                //here dataResponse received from a network request
-                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-                print(jsonResponse) //Response result
-
+                //convert to json array
                 guard let jsonArray = jsonResponse as? [[String: Any]] else {
                     return
                 }
-                print(jsonArray)
-
-                //store all plants
+                
                 for dic in jsonArray {
                     guard let name = dic["CropName"] as? String else {return}
-                    guard let minSpace = dic["Min Space (in cms)"] as? String else {
-                        return
-                    }
+                    guard let minSpace = dic["Min Space (in cms)"] as? String else {return}
                     guard let maxSpace = dic["Max Space (In cms)"] as? String else {return}
                     guard let minHarvest = dic["Min Harvest time (Weeks)"] as? String else {return}
                     guard let maxHarvest = dic["Max harvest time (Weeks)"] as? String else {return}
-                    
+
                     let newPlant = Plant(name: name, minSpace: minSpace, maxSpace: maxSpace, minHarvest: minHarvest, maxHarvest: maxHarvest)
-                    self.plants.append(newPlant)
+                    
+                    if self.filterFromUserInput(plant: newPlant) {
+                        self.plants.append(newPlant)
+                    }
                 }
                 
-                self.tableView.reloadData()
-
-            } catch let parsingError {
-                print("Error", parsingError)
+            } catch {
+                print("somthing wrong after downloaded")
             }
-
-        }
-        task.resume()
-
+            
+        }.resume()
     }
 
     // MARK: - Table view data source
@@ -115,7 +120,11 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         cell.pImage.image = UIImage(named: plant.name)
         cell.nameLabel.text = plant.name
-        cell.infoLabel.text = "Space need: \(plant.minSpace) cm - \(plant.maxSpace) cm"
+        if plant.minSpace == plant.maxSpace {
+            cell.infoLabel.text = "Space need: \(plant.minSpace) cm"
+        } else {
+            cell.infoLabel.text = "Space need: \(plant.minSpace) cm - \(plant.maxSpace) cm"
+        }
         cell.harvestLabel.text = "Harvest Time: \(plant.minHarvest) - \(plant.maxHarvest) Weeks"
 
         return cell
@@ -173,6 +182,29 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         })
         
         tableView.reloadData()
+    }
+    
+    private func filterFromUserInput(plant: Plant) -> Bool {
+        
+        switch filter {
+        case "harvestTime":
+            let maxHarvest = Int(plant.maxHarvest) ?? 0
+            if (maxHarvest >= Int(user?.expectTime[0] ?? "0") ?? 0) && (maxHarvest <= Int(user?.expectTime[1] ?? "0") ?? 0){
+                return true
+            } else {
+                return false
+            }
+        case "space":
+            let maxSpace = Int(plant.maxSpace) ?? 0
+            if (maxSpace >= Int(user?.useSpace[0] ?? "0") ?? 0) && (maxSpace <= Int(user?.useSpace[1] ?? "0") ?? 0) {
+                return true
+            } else {
+                return false
+            }
+        default: break
+        }
+        
+        return true
     }
 
 }

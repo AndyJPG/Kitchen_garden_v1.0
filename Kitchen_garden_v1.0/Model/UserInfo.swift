@@ -13,7 +13,7 @@ class UserInfo: NSObject, NSCoding {
     
     //Properties
     var name: String
-    var expectTime: Int
+    var expectTime: [String]
     var useSpace: [String]
     
     //MARK: Archiving Paths
@@ -28,21 +28,11 @@ class UserInfo: NSObject, NSCoding {
     }
     
     //MARK: Inilialization
-    init?(name: String, expectTime: Int, useSpace: [String]) {
+    init?(name: String, expectTime: [String], useSpace: [String]) {
         //set up for user name
         guard !name.isEmpty else {
             return nil
         }
-        
-        //expect time must between 3 to 100 weeks
-        guard (expectTime >= 3) && (expectTime <= 100) else {
-            return nil
-        }
-        
-//        //use space must between 10 to 250
-//        guard (useSpace >= 10) && (useSpace <= 250) else {
-//            return nil
-//        }
         
         self.name = name
         self.expectTime = expectTime
@@ -65,7 +55,10 @@ class UserInfo: NSObject, NSCoding {
         }
         
         // Because photo is an optional property of Meal, just use conditional cast.
-        let expectTime = aDecoder.decodeInteger(forKey: PropertyKey.expectTime)
+        guard let expectTime = aDecoder.decodeObject(forKey: PropertyKey.expectTime) as? [String] else {
+            os_log("Unable to decode the space array", log: OSLog.default, type: .debug)
+            return nil
+        }
         
         //Decode array
         guard let useSpace = aDecoder.decodeObject(forKey: PropertyKey.useSpace) as? [String] else {

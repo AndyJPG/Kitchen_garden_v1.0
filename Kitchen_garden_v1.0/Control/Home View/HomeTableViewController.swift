@@ -11,6 +11,7 @@ import UIKit
 class HomeTableViewController: UITableViewController {
     
     //MARK: Properites
+    var user: UserInfo?
     var plants = [Plant]()
 
     override func viewDidLoad() {
@@ -21,6 +22,10 @@ class HomeTableViewController: UITableViewController {
         //Check for persistent data
         if let loadPlants = loadPlants() {
             plants = loadPlants
+        }
+        
+        if let user = user {
+             navigationItem.title = "\(user.name)'s Farm"
         }
         
     }
@@ -86,15 +91,22 @@ class HomeTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        guard let nv = segue.destination as? UINavigationController else {
+            fatalError("cant get navigation controller")
+        }
+        
+        guard let preferenceVC = nv.topViewController as? PerferenceViewController else {
+            fatalError("cant get perference view controller")
+        }
+        
+        preferenceVC.user = user
     }
-    */
+    
     
     //MARK: Unwind method
     @IBAction func unwindToHome(sender: UIStoryboardSegue) {

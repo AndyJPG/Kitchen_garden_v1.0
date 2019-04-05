@@ -19,9 +19,9 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     var user: UserInfo?
     //array for harvest time and space size
-    let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
-    var spaceNumber = [String]()
-    let options = ["By harvest time", "By available space", "All"]
+//    let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
+    var spaceNumber = [["min"],["0"],["max"],["0"]]
+    let options = ["By harvest time", "By available space", "View All Plants"]
     
     
     override func viewDidLoad() {
@@ -34,7 +34,8 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         //Set space number picker row
         var index = 5
         while index <= 100 {
-            spaceNumber.append(String(index))
+            spaceNumber[1].append(String(index))
+            spaceNumber[3].append(String(index))
             index += 5
         }
         
@@ -46,6 +47,9 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         //Create picker view
         createPickerView()
+        
+        //test code delete after
+        user = UserInfo(name: "andy", expectTime: ["0"], useSpace: ["0"])
         
     }
     
@@ -80,11 +84,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             return 1
         } else if optionInput.isFirstResponder {
-            if searchOptions.text == "By harvest time" {
-                return 1
-            } else {
-                return 2
-            }
+            return 4
         }
         return 0
     }
@@ -94,11 +94,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             return options.count
         } else if optionInput.isFirstResponder {
-            if searchOptions.text == "By harvest time" {
-                return dateForHarvest.count
-            } else {
-                return spaceNumber.count
-            }
+            return spaceNumber[component].count
         }
         return 0
     }
@@ -108,11 +104,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             return options[row]
         } else if optionInput.isFirstResponder {
-            if searchOptions.text == "By harvest time" {
-                return dateForHarvest[row].brief
-            } else {
-                return spaceNumber[row]
-            }
+            return spaceNumber[component][row]
         }
         return nil
     }
@@ -120,26 +112,27 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     //Select a row and assign value to user
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if searchOptions.isFirstResponder {
-            
             let selectedOption = options[row]
             searchOptions.text = selectedOption
             
         } else if optionInput.isFirstResponder {
             
             if searchOptions.text == "By harvest time" {
-                let pickedDate = dateForHarvest[pickerView.selectedRow(inComponent: 0)]
-                optionInput.text = pickedDate.brief
-                user?.expectTime = pickedDate.time
+                let minDate = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
+                let maxDate = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
+                optionInput.text = "\(minDate) - \(maxDate) Weeks"
+                user?.expectTime = [minDate, maxDate] // need to change
             } else {
-                let width =  spaceNumber[pickerView.selectedRow(inComponent: 0)]
-                let long = spaceNumber[pickerView.selectedRow(inComponent: 1)]
-                optionInput.text =   width + " x " + long
-                user?.useSpace = [width, long]
+                let minSpace =  spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
+                let maxSpace = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
+                optionInput.text = "\(minSpace) - \(maxSpace) cm"
+                user?.useSpace = [minSpace, maxSpace]
             }
             
         }
         
     }
+    
     
     //Dismiss picker view
     @objc func doneButtonTapped(){
@@ -166,15 +159,13 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             optionInput.isEnabled = false
             optionInput.text = ""
-            optionLabel.isHidden = true
-            optionInput.isHidden = true
         } else {
             searchOptions.isEnabled = false
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if searchOptions.text != "All" {
+        if searchOptions.text != "View All Plants" {
             searchOptions.isEnabled = true
             optionInput.isEnabled = true
         }
@@ -183,7 +174,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     //MARK: Search button state
     private func searchButtonState()  {
-        if searchOptions.text == "All" {
+        if searchOptions.text == "View All Plants" {
             searchButton.isEnabled = true
         } else if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
             searchButton.isEnabled = false
@@ -227,8 +218,29 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        //pass massage
+        guard let nv = segue.destination as? UINavigationController else {
+            fatalError("cant get navigation controller")
+        }
+        
+        guard  let searchVC = nv.topViewController as? SearchTableViewController else {
+            fatalError("Cant reach search table view controller")
+        }
+        
+        searchVC.user = user
+        
+        let filter = searchOptions.text
+        switch filter {
+        case "By harvest time":
+            searchVC.filter = "harvestTime"
+        case "By available space":
+            searchVC.filter = "space"
+        default:
+            searchVC.filter = "all"
+        }
+        
     }
     
     

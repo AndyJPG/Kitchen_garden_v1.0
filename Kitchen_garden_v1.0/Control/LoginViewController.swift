@@ -12,7 +12,7 @@ import os.log
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Properties
-    var user = [UserInfo]()
+    var user: UserInfo?
     @IBOutlet weak var explore: UIButton!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var welcomeLabel: UILabel!
@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         // Do any additional setup after loading the view.
         if let userInfo = loadUser() {
-            user = userInfo
+            user = userInfo[0]
         }
         
         welcomeLabel.text = "Please enter your name"
@@ -48,37 +48,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateButtonState()
         let name = nameField.text ?? ""
-        guard let newUser = UserInfo(name: name, expectTime: 3, useSpace: ["0","0"]) else {
+        guard let newUser = UserInfo(name: name, expectTime: ["0", "0"], useSpace: ["0","0"]) else {
             fatalError("Unable to creat instains")
         }
-        user = [newUser]
+        user = newUser
         saveUserInfo()
     }
     
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //Always have super prepare
-//        super.prepare(for: segue, sender: sender)
-//
-//        switch (segue.identifier ?? "") {
-//        case "goHomePage":
-//            os_log("Navigate to home page", log: OSLog.default, type: .debug)
-//
-//        case "preferenceSegue":
-//            guard let nv = segue.destination as? UINavigationController else {
-//                fatalError("Unexpected sender: \(segue.destination)")
-//            }
-//            
-//            guard let preNV = nv.topViewController as? PerferenceViewController else {
-//                fatalError("Unexpected sender: \(nv)")
-//            }
-//
-//            preNV.user = user[0]
-//
-//        default:
-//            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
-//        }
-//
+        super.prepare(for: segue, sender: sender)
+        
+        guard let nv = segue.destination as? UINavigationController else {
+            fatalError("Unexpected sender: \(segue.destination)")
+        }
+        
+        guard let homeVC = nv.topViewController as? HomeTableViewController else {
+            fatalError("Unexpected sender: \(String(describing: nv.topViewController))")
+        }
+        
+        homeVC.user = user
         
     }
     
@@ -90,7 +80,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Private save and load user data
     private func saveUserInfo() {
-        let data = try? NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
+        let data = try? NSKeyedArchiver.archivedData(withRootObject: [user], requiringSecureCoding: false)
         UserDefaults.standard.set(data, forKey: "user")
     }
     
