@@ -119,7 +119,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     private func uiAlert()  {
-        super.viewDidAppear(true)
         let alert = UIAlertController(title: "Name", message: "Please enter your name before getting start", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in

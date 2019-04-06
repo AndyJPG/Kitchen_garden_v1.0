@@ -9,19 +9,21 @@
 import UIKit
 import os.log
 
-class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationBarDelegate, UIAlertViewDelegate {
 
     //MARK: Properties
     @IBOutlet weak var searchOptions: UITextField!
     @IBOutlet weak var optionInput: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var optionLabel: UILabel!
+    @IBOutlet weak var topSquare: UIView!
     
     var user: UserInfo?
     //array for harvest time and space size
 //    let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
     var spaceNumber = [["min"],["0"],["max"],["0"]]
-    let options = ["By harvest time", "By available space", "View All Plants"]
+    let options = ["By harvest time (weeks)", "By available space", "View All Plants"]
+    var optionID: Int?
     
     
     override func viewDidLoad() {
@@ -39,6 +41,11 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             index += 5
         }
         
+        
+//        navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "back"), for: .normal, barMetrics: .default)
+        
+        user = UserInfo(name: "Andy", expectTime: ["0", "0"], useSpace: ["0", "0"])
+        
         //update state
         searchButtonState()
         
@@ -47,6 +54,13 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         //Create picker view
         createPickerView()
+        
+        //create view
+        createView()
+        
+        updateNVBarUI()
+        
+        updateButtonColor(bool: false)
         
     }
     
@@ -109,12 +123,14 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     //Select a row and assign value to user
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if searchOptions.isFirstResponder {
+            
             let selectedOption = options[row]
+            optionID = row
             searchOptions.text = selectedOption
             
         } else if optionInput.isFirstResponder {
             
-            if searchOptions.text == "By harvest time" {
+            if searchOptions.text == "By harvest time (weeks)" {
                 let minDate = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
                 let maxDate = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
                 optionInput.text = "\(minDate) - \(maxDate) Weeks"
@@ -136,6 +152,14 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             searchOptions.resignFirstResponder()
         } else {
+            if (searchOptions.text == "By harvest time (weeks)") && (Int(user?.expectTime[0] ?? "0") ?? 0 > Int(user?.expectTime[1] ?? "0") ?? 0) {
+                optionInput.text = ""
+                uiAlert()
+            } else if (searchOptions.text == "By available space") && (Int(user?.useSpace[0] ?? "0") ?? 0 > Int(user?.useSpace[1] ?? "0") ?? 0)  {
+                optionInput.text = ""
+                uiAlert()
+            }
+            searchButtonState()
             optionInput.resignFirstResponder()
         }
         updateHiddenOption()
@@ -172,11 +196,23 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     //MARK: Search button state
     private func searchButtonState()  {
         if searchOptions.text == "View All Plants" {
+            updateButtonColor(bool: true)
             searchButton.isEnabled = true
         } else if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
+            updateButtonColor(bool: false)
             searchButton.isEnabled = false
         } else {
+            updateButtonColor(bool: true)
             searchButton.isEnabled = true
+        }
+    }
+    
+    private func updateButtonColor (bool: Bool) {
+        if bool {
+            searchButton.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        } else {
+            searchButton.backgroundColor = UIColor.lightGray
+                //UIColor.init(red: 49.0/255.0, green: 49.0/255.0, blue: 49.0/255.0, alpha: 1.0)
         }
     }
     
@@ -187,7 +223,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         let option = searchOptions.text
         //updatae hidden option
         switch option {
-        case "By harvest time":
+        case "By harvest time (weeks)":
             optionLabel.text = "Choose expected harvest time"
             optionInput.placeholder = "pick expected harvest time"
             optionLabel.isHidden = false
@@ -210,8 +246,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
      @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
      }
-     
-     
+    
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -230,7 +265,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         let filter = searchOptions.text
         switch filter {
-        case "By harvest time":
+        case "By harvest time (weeks)":
             searchVC.filter = "harvestTime"
         case "By available space":
             searchVC.filter = "space"
@@ -245,6 +280,56 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     private func saveUserInfo() {
         let data = try? NSKeyedArchiver.archivedData(withRootObject: [user], requiringSecureCoding: false)
         UserDefaults.standard.set(data, forKey: "user")
+    }
+    
+    private func uiAlert()  {
+        let alert = UIAlertController(title: "Wrong input", message: "Please pick a minimum number small than maximum number", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Ui view sqaure design
+    func createView() {
+        
+        topSquare.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        topSquare.layer.shadowColor = UIColor.black.cgColor
+        topSquare.layer.shadowOpacity = 0.4
+        topSquare.layer.shadowOffset = CGSize.zero
+        topSquare.layer.shadowRadius = 5
+        
+        topSquare.layer.shadowPath = UIBezierPath(rect: topSquare.bounds).cgPath
+        topSquare.layer.shouldRasterize = true
+        
+        topSquare.layer.cornerRadius = 25
+        topSquare.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        //        topSquare.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        //        topSquare.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        //
+        //        topSquare.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        //        topSquare.heightAnchor.constraint(equalToConstant: view.frame.height/2.3).isActive = true
+        
+        searchButton.layer.cornerRadius = 20
+        searchButton.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+    }
+    
+    private func updateNVBarUI() {
+        navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.isTranslucent = false
+        
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+    }
+    
+    //set status bar to white
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 }
