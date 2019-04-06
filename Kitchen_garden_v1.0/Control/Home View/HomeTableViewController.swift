@@ -96,15 +96,37 @@ class HomeTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        guard let nv = segue.destination as? UINavigationController else {
-            fatalError("cant get navigation controller")
+        switch segue.identifier {
+        case "homeToSearch":
+            guard let nv = segue.destination as? UINavigationController else {
+                fatalError("cant get navigation controller")
+            }
+            
+            guard let preferenceVC = nv.topViewController as? PerferenceViewController else {
+                fatalError("cant get perference view controller")
+            }
+            
+            preferenceVC.user = user
+        case "showDetail":
+            guard let detailVC = segue.destination as? DetailViewController else {
+                fatalError("cant get detail view controller")
+            }
+            
+            guard let selectedPlantCell = sender as? HomeTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedPlantCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            
+            let selectedPlant = plants[indexPath.row]
+            detailVC.plant = selectedPlant
+            
+        default: break
         }
         
-        guard let preferenceVC = nv.topViewController as? PerferenceViewController else {
-            fatalError("cant get perference view controller")
-        }
-        
-        preferenceVC.user = user
     }
     
     

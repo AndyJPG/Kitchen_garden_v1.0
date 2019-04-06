@@ -48,9 +48,6 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         //Create picker view
         createPickerView()
         
-        //test code delete after
-        user = UserInfo(name: "andy", expectTime: ["0"], useSpace: ["0"])
-        
     }
     
     //MARK: Create a picker view

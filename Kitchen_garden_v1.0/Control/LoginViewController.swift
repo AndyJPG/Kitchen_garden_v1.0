@@ -9,13 +9,13 @@
 import UIKit
 import os.log
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate {
     
     //MARK: Properties
     var user: UserInfo?
     @IBOutlet weak var explore: UIButton!
     @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var topSquare: UIView!
     
 
     override func viewDidLoad() {
@@ -27,10 +27,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if let userInfo = loadUser() {
             user = userInfo[0]
         }
+                
+//        updateButtonState()
         
-        welcomeLabel.text = "Please enter your name"
+        //create to square view
+        createView()
         
-        updateButtonState()
     }
     
     //MARK: UITextFieldDelegate
@@ -89,6 +91,53 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return nil
         }
         return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [UserInfo]
+    }
+    
+    //MARK: Ui view sqaure design
+    func createView() {
+        
+        topSquare.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        topSquare.layer.shadowColor = UIColor.black.cgColor
+        topSquare.layer.shadowOpacity = 0.4
+        topSquare.layer.shadowOffset = CGSize.zero
+        topSquare.layer.shadowRadius = 5
+        
+        topSquare.layer.shadowPath = UIBezierPath(rect: topSquare.bounds).cgPath
+        topSquare.layer.shouldRasterize = true
+        
+        topSquare.layer.cornerRadius = 25
+        topSquare.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+//        topSquare.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        topSquare.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        
+//        topSquare.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        topSquare.heightAnchor.constraint(equalToConstant: view.frame.height/2.3).isActive = true
+        
+        explore.layer.cornerRadius = 20
+        explore.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+    }
+    
+    private func uiAlert()  {
+        super.viewDidAppear(true)
+        let alert = UIAlertController(title: "Name", message: "Please enter your name before getting start", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func exploreTapped(_ sender: Any) {
+        explore.backgroundColor = UIColor.init(red: 85/255, green: 168/255, blue: 100/255, alpha: 1.0)
+        if nameField.text?.isEmpty ?? true {
+            uiAlert()
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 

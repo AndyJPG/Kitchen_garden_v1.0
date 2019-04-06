@@ -159,7 +159,6 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
             fatalError("The selected cell is not being displayed by the table")
         }
         
-        
         let selectedPlant = plants[indexPath.row]
         detailVC.plant = selectedPlant
         
