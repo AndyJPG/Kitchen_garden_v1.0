@@ -48,13 +48,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        updateButtonState()
-        let name = nameField.text ?? ""
-        guard let newUser = UserInfo(name: name, expectTime: ["0", "0"], useSpace: ["0","0"]) else {
-            fatalError("Unable to creat instains")
+        if nameField.text?.isEmpty == false {
+            let name = nameField.text ?? ""
+            guard let newUser = UserInfo(name: name, expectTime: ["0", "0"], useSpace: ["0","0"]) else {
+                fatalError("Unable to creat instains")
+            }
+            user = newUser
+            saveUserInfo()
         }
-        user = newUser
-        saveUserInfo()
+        
+        explore.isEnabled = true
     }
     
     //MARK: Navigation
@@ -75,10 +78,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     //MARK: Private method
-    private func updateButtonState() {
-        let text = nameField.text ?? ""
-        explore.isEnabled = !text.isEmpty
-    }
+//    private func updateButtonState() {
+//        let text = nameField.text ?? ""
+//        explore.isEnabled = !text.isEmpty
+//    }
     
     //MARK: Private save and load user data
     private func saveUserInfo() {
@@ -119,7 +122,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     private func uiAlert()  {
-        let alert = UIAlertController(title: "Name", message: "Please enter your name before getting start", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Error", message: "Please enter your name before we start", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
@@ -129,7 +132,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     }
     
     @IBAction func exploreTapped(_ sender: Any) {
-        explore.backgroundColor = UIColor.init(red: 85/255, green: 168/255, blue: 100/255, alpha: 1.0)
         if nameField.text?.isEmpty ?? true {
             uiAlert()
         }

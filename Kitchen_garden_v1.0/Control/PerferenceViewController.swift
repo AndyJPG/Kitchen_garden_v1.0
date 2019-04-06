@@ -22,7 +22,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     //array for harvest time and space size
 //    let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
     var spaceNumber = [["min"],["0"],["max"],["0"]]
-    let options = ["By harvest time (weeks)", "By available space", "View All Plants"]
+    let options = ["By harvest time (weeks)", "By available spacing (cm)", "View All Plants"]
     var optionID: Int?
     
     
@@ -44,7 +44,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
 //        navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "back"), for: .normal, barMetrics: .default)
         
-        user = UserInfo(name: "Andy", expectTime: ["0", "0"], useSpace: ["0", "0"])
+//        user = UserInfo(name: "Andy", expectTime: ["0", "0"], useSpace: ["0", "0"])
         
         //update state
         searchButtonState()
@@ -134,7 +134,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
                 let minDate = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
                 let maxDate = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
                 optionInput.text = "\(minDate) - \(maxDate) Weeks"
-                user?.expectTime = [minDate, maxDate] // need to change
+                user?.expectTime = [minDate, maxDate]
             } else {
                 let minSpace =  spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
                 let maxSpace = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
@@ -152,12 +152,16 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         if searchOptions.isFirstResponder {
             searchOptions.resignFirstResponder()
         } else {
-            if (searchOptions.text == "By harvest time (weeks)") && (Int(user?.expectTime[0] ?? "0") ?? 0 > Int(user?.expectTime[1] ?? "0") ?? 0) {
-                optionInput.text = ""
-                uiAlert()
-            } else if (searchOptions.text == "By available space") && (Int(user?.useSpace[0] ?? "0") ?? 0 > Int(user?.useSpace[1] ?? "0") ?? 0)  {
-                optionInput.text = ""
-                uiAlert()
+            if (searchOptions.text == "By harvest time (weeks)") {
+                if (Int(user?.expectTime[0] ?? "0") ?? 0 >= Int(user?.expectTime[1] ?? "0") ?? 0) {
+                    optionInput.text = ""
+                    uiAlert()
+                }
+            } else if (searchOptions.text == "By available spacing (cm)") {
+                if (Int(user?.useSpace[0] ?? "0") ?? 0 >= Int(user?.useSpace[1] ?? "0") ?? 0) {
+                    optionInput.text = ""
+                    uiAlert()
+                }
             }
             searchButtonState()
             optionInput.resignFirstResponder()
@@ -228,7 +232,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             optionInput.placeholder = "pick expected harvest time"
             optionLabel.isHidden = false
             optionInput.isHidden = false
-        case "By available space":
+        case "By available spacing (cm)":
             optionLabel.text = "Choose available space size"
             optionInput.placeholder = "pick available space size"
             optionLabel.isHidden = false
@@ -267,7 +271,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         switch filter {
         case "By harvest time (weeks)":
             searchVC.filter = "harvestTime"
-        case "By available space":
+        case "By available spacing (cm)":
             searchVC.filter = "space"
         default:
             searchVC.filter = "all"
@@ -283,7 +287,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     private func uiAlert()  {
-        let alert = UIAlertController(title: "Wrong input", message: "Please pick a minimum number small than maximum number", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Wrong input", message: "Minimum number can not be smaller than or equal to maximum number", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
@@ -328,8 +332,13 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     //set status bar to white
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
+    
+    //set status bar to white for story board with navigation bar
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
     }
 
 }

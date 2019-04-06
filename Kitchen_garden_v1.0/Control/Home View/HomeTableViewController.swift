@@ -28,6 +28,14 @@ class HomeTableViewController: UITableViewController {
              navigationItem.title = "\(user.name)'s Farm"
         }
         
+        //update ui
+        setNavigationBar()
+        
+    }
+    
+    //Set status to white
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
     }
 
     // MARK: - Table view data source
@@ -123,12 +131,16 @@ class HomeTableViewController: UITableViewController {
             
             let selectedPlant = plants[indexPath.row]
             detailVC.plant = selectedPlant
+            detailVC.navigationItem.rightBarButtonItem = nil
             
         default: break
         }
         
     }
     
+    @IBAction func backToLogin(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     //MARK: Unwind method
     @IBAction func unwindToHome(sender: UIStoryboardSegue) {
@@ -165,6 +177,15 @@ class HomeTableViewController: UITableViewController {
             return nil
         }
         return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Plant]
+    }
+    
+    //MARK: UI
+    
+    private func setNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.isTranslucent = false
     }
 
 }
