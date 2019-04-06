@@ -19,23 +19,11 @@ class HomeTableViewController: UITableViewController {
 
         self.clearsSelectionOnViewWillAppear = false
         
-        //Check for persistent data
-        if let loadPlants = loadPlants() {
-            plants = loadPlants
-        }
         
-        if let user = user {
-             navigationItem.title = "\(user.name)'s Farm"
-        }
-        
+        loadUserAndNVtitle()
         //update ui
-        setNavigationBar()
+        setNavigationBarAndCell()
         
-    }
-    
-    //Set status to white
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
     }
 
     // MARK: - Table view data source
@@ -84,26 +72,6 @@ class HomeTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
-    }
-    
-    //MARK: Delete pop up confirmation
-    private func deleteConfirmation(_ indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Delete plant", message: "Are you sure you want to delete this plant ?", preferredStyle: UIAlertController.Style.actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
-            self.plants.remove(at: indexPath.row)
-            self.savePlants()
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: { (_) in
-            print("Delete dismiss")
-        }))
-        
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
     }
 
     /*
@@ -188,6 +156,8 @@ class HomeTableViewController: UITableViewController {
         print("welcome back")
     }
     
+    
+    
     //MARK: Private method
     private func savePlants() {
         let data = try? NSKeyedArchiver.archivedData(withRootObject: plants, requiringSecureCoding: false)
@@ -202,12 +172,50 @@ class HomeTableViewController: UITableViewController {
     }
     
     //MARK: UI
-    
-    private func setNavigationBar() {
+    private func setNavigationBarAndCell() {
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.isTranslucent = false
+        tableView.separatorStyle = .none
+        tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
+    }
+    
+    //Set status to white
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    //MARK: Load and change navigation title
+    private func loadUserAndNVtitle() {
+        //Check for persistent data
+        if let loadPlants = loadPlants() {
+            plants = loadPlants
+        }
+        
+        if let user = user {
+            navigationItem.title = "\(user.name)'s Farm"
+        }
+    }
+    
+    //MARK: Delete pop up confirmation
+    private func deleteConfirmation(_ indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete plant", message: "Are you sure you want to delete this plant ?", preferredStyle: UIAlertController.Style.actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
+            self.plants.remove(at: indexPath.row)
+            self.savePlants()
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: { (_) in
+            print("Delete dismiss")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+        
     }
 
 }

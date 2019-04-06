@@ -39,6 +39,7 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         //read data
         parsingJson()
+        setNavigationBar()
         
         while plants.isEmpty {
             tableView.reloadData()
@@ -209,6 +210,22 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         }
         
         return true
+    }
+    
+    //MARK: UI
+    private func setNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.isTranslucent = false
+    }
+    
+    //Set status to white
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 }

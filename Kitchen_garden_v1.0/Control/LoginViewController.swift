@@ -121,19 +121,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         explore.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
     }
     
-    private func uiAlert()  {
-        let alert = UIAlertController(title: "Error", message: "Please enter your name before we start", preferredStyle: UIAlertController.Style.alert)
+    private func uiAlert(_ alertCase: Int)  {
+        var alert = UIAlertController()
+        
+        switch alertCase {
+        case 0:
+        alert = UIAlertController(title: "Error", message: "Please enter your name before we start", preferredStyle: UIAlertController.Style.alert)
+        case 1:
+            alert = UIAlertController(title: "Error", message: "Please enter characters or number", preferredStyle: UIAlertController.Style.alert)
+        default: break
+        }
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
         }))
-        
         present(alert, animated: true, completion: nil)
     }
     
     @IBAction func exploreTapped(_ sender: Any) {
+        guard let name = nameField.text as String? else {fatalError("can not convert")}
         if nameField.text?.isEmpty ?? true {
-            uiAlert()
+            uiAlert(0)
+        } else if name.rangeOfCharacter(from: CharacterSet.letters) == nil || name.rangeOfCharacter(from: CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_ ")) == nil {
+            uiAlert(1)
         }
     }
     

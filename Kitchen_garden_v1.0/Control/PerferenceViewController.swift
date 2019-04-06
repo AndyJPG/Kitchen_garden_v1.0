@@ -23,7 +23,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     let picker = UIPickerView()
     var activeTextField = 0
     
-    var spaceNumber = [["min"],["0"],["max"],["0"]]
+    var numbers = [["min"],["0"],["max"],["0"]]
     let options = ["By harvest time (weeks)", "By available spacing (cm)", "View All Plants"]
     
     
@@ -37,8 +37,8 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         //Set space number picker row
         var index = 5
         while index <= 100 {
-            spaceNumber[1].append(String(index))
-            spaceNumber[3].append(String(index))
+            numbers[1].append(String(index))
+            numbers[3].append(String(index))
             index += 5
         }
         
@@ -109,7 +109,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         case 1:
             return options.count
         case 2:
-            return spaceNumber[component].count
+            return numbers[component].count
         default:
             return 0
         }
@@ -122,7 +122,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         case 1:
             return options[row]
         case 2:
-            return spaceNumber[component][row]
+            return numbers[component][row]
         default:
             return options[row]
         }
@@ -136,8 +136,8 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             updateHiddenOption()
             searchButtonState()
         case 2:
-            let select1 = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
-            let select2 = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
+            let select1 = numbers[1][pickerView.selectedRow(inComponent: 1)]
+            let select2 = numbers[3][pickerView.selectedRow(inComponent: 3)]
             if searchOptions.text == options[0] {
                 optionInput.text = "\(select1) - \(select2) Weeks"
                 user?.expectTime = [select1, select2]
@@ -150,8 +150,8 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         default:
             
             searchOptions.text = options[row]
-            let select1 = spaceNumber[1][row]
-            let select2 = spaceNumber[3][row]
+            let select1 = numbers[1][row]
+            let select2 = numbers[3][row]
 
             switch searchOptions.text {
             case options[0]:
@@ -244,7 +244,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         guard let minHarvest = Int(user?.expectTime[0] ?? "0") else {fatalError("cant change min harvest to int")}
         guard let maxHarvest = Int(user?.expectTime[1] ?? "0") else {fatalError("cant change max harvest to int")}
         guard let minSpacing = Int(user?.useSpace[0] ?? "0") else {fatalError("cant change max harvest to int")}
-        guard let maxSpacing = Int(user?.expectTime[1] ?? "0") else {fatalError("cant change max harvest to int")}
+        guard let maxSpacing = Int(user?.useSpace[1] ?? "0") else {fatalError("cant change max harvest to int")}
         
         if minHarvest >= maxHarvest && searchOptions.text == options[0] {
             uiAlert()
