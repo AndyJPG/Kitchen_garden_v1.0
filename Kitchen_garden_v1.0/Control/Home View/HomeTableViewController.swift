@@ -105,16 +105,6 @@ class HomeTableViewController: UITableViewController {
         })
         
     }
-    
-    private func uiAlert()  {
-        let alert = UIAlertController(title: "Wrong input", message: "Minimum number can not be smaller than or equal to maximum number", preferredStyle: UIAlertController.Style.alert)
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-            //Cancel Action
-        }))
-        
-        present(alert, animated: true, completion: nil)
-    }
 
     /*
     // Override to support rearranging the table view.

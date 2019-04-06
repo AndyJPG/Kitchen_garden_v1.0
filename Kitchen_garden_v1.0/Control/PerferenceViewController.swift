@@ -19,11 +19,12 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var topSquare: UIView!
     
     var user: UserInfo?
-    //array for harvest time and space size
-//    let dateForHarvest:[(brief: String, time: Int )] = [("5-15 Weeks",15),("15-25 Weeks",25),("25-35 Weeks",35),("35-45 Weeks",45),("45-55 Weeks",55),("55-65 Weeks",65),("65-75 Weeks",75)]
+    //for picker
+    let picker = UIPickerView()
+    var activeTextField = 0
+    
     var spaceNumber = [["min"],["0"],["max"],["0"]]
     let options = ["By harvest time (weeks)", "By available spacing (cm)", "View All Plants"]
-    var optionID: Int?
     
     
     override func viewDidLoad() {
@@ -32,7 +33,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         //Delegate
         searchOptions.delegate = self
         optionInput.delegate = self
-        
+                
         //Set space number picker row
         var index = 5
         while index <= 100 {
@@ -41,19 +42,13 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             index += 5
         }
         
-        
-//        navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "back"), for: .normal, barMetrics: .default)
-        
-//        user = UserInfo(name: "Andy", expectTime: ["0", "0"], useSpace: ["0", "0"])
+        user = UserInfo(name: "Andy", expectTime: ["0","0"], useSpace: ["0","0"])
         
         //update state
         searchButtonState()
         
         //hidden options
         updateHiddenOption()
-        
-        //Create picker view
-        createPickerView()
         
         //create view
         createView()
@@ -62,144 +57,137 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         updateButtonColor(bool: false)
         
+        //picker view
+        createPickerView()
+        createToolbar()
+        
     }
     
     //MARK: Create a picker view
     func createPickerView() {
-        let pickerView = UIPickerView()
-        
-        //set delegate
-        pickerView.delegate = self
-        searchOptions.inputView = pickerView
-        optionInput.inputView = pickerView
-        
-        //Create picker button
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
-        toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.doneButtonTapped))
-        
-        // Add flexible space to move done button to right
+        picker.delegate = self
+        picker.delegate?.pickerView?(picker, didSelectRow: 0, inComponent: 0)
+        searchOptions.inputView = picker
+        optionInput.inputView = picker
+    }
+    
+    //Create tool bar
+    func createToolbar() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        toolbar.tintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(PerferenceViewController.closePickerView))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([flexibleSpace,doneButton], animated: false)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        searchOptions.inputAccessoryView = toolbar
+        optionInput.inputAccessoryView = toolbar
+    }
+    
+    @objc func closePickerView()
+    {
+        view.endEditing(true)
+    }
+    
+    //picker columns
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
-        searchOptions.inputAccessoryView = toolBar
-        optionInput.inputAccessoryView = toolBar
+        switch activeTextField {
+        case 1:
+            return 1
+        case 2:
+            return 4
+        default:
+            return 0
+        }
+    }
+    
+    //picker row number
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        switch activeTextField {
+        case 1:
+            return options.count
+        case 2:
+            return spaceNumber[component].count
+        default:
+            return 0
+        }
+    }
+    
+    //picker display title
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        switch activeTextField {
+        case 1:
+            return options[row]
+        case 2:
+            return spaceNumber[component][row]
+        default:
+            return options[row]
+        }
     }
     
     //MARK: Action picker
-    //Set number of column
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if searchOptions.isFirstResponder {
-            return 1
-        } else if optionInput.isFirstResponder {
-            return 4
-        }
-        return 0
-    }
-    
-    //Set number of row
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if searchOptions.isFirstResponder {
-            return options.count
-        } else if optionInput.isFirstResponder {
-            return spaceNumber[component].count
-        }
-        return 0
-    }
-    
-    //Set picker title for row
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if searchOptions.isFirstResponder {
-            return options[row]
-        } else if optionInput.isFirstResponder {
-            return spaceNumber[component][row]
-        }
-        return nil
-    }
-    
-    //Select a row and assign value to user
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if searchOptions.isFirstResponder {
-            
-            let selectedOption = options[row]
-            optionID = row
-            searchOptions.text = selectedOption
-            
-        } else if optionInput.isFirstResponder {
-            
-            if searchOptions.text == "By harvest time (weeks)" {
-                let minDate = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
-                let maxDate = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
-                optionInput.text = "\(minDate) - \(maxDate) Weeks"
-                user?.expectTime = [minDate, maxDate]
-            } else {
-                let minSpace =  spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
-                let maxSpace = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
-                optionInput.text = "\(minSpace) - \(maxSpace) cm"
-                user?.useSpace = [minSpace, maxSpace]
-            }
-            
-        }
-        
-    }
-    
-    
-    //Dismiss picker view
-    @objc func doneButtonTapped(){
-        if searchOptions.isFirstResponder {
-            searchOptions.resignFirstResponder()
-        } else {
-            if (searchOptions.text == "By harvest time (weeks)") {
-                if (Int(user?.expectTime[0] ?? "0") ?? 0 >= Int(user?.expectTime[1] ?? "0") ?? 0) {
-                    optionInput.text = ""
-                    uiAlert()
-                }
-            } else if (searchOptions.text == "By available spacing (cm)") {
-                if (Int(user?.useSpace[0] ?? "0") ?? 0 >= Int(user?.useSpace[1] ?? "0") ?? 0) {
-                    optionInput.text = ""
-                    uiAlert()
-                }
-            }
+        switch activeTextField {
+        case 1:
+            searchOptions.text = options[row]
+            updateHiddenOption()
             searchButtonState()
-            optionInput.resignFirstResponder()
+        case 2:
+            let select1 = spaceNumber[1][pickerView.selectedRow(inComponent: 1)]
+            let select2 = spaceNumber[3][pickerView.selectedRow(inComponent: 3)]
+            if searchOptions.text == options[0] {
+                optionInput.text = "\(select1) - \(select2) Weeks"
+                user?.expectTime = [select1, select2]
+                searchButtonState()
+            } else {
+                optionInput.text = "\(select1) cm - \(select2) cm"
+                user?.useSpace = [select1, select2]
+                searchButtonState()
+            }
+        default:
+            
+            searchOptions.text = options[row]
+            let select1 = spaceNumber[1][row]
+            let select2 = spaceNumber[3][row]
+
+            switch searchOptions.text {
+            case options[0]:
+                optionInput.text = "\(select1) - \(select2) Weeks"
+                user?.expectTime = [select1, select2]
+            case options[1]:
+                optionInput.text = "\(select1) cm - \(select2) cm"
+                user?.useSpace = [select1, select2]
+            default: break
+            }
+            
+            updateHiddenOption()
+            searchButtonState()
+            
+            break
         }
-        updateHiddenOption()
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            view.endEditing(true)
-    }
-    
-    override func didReceiveMemoryWarning()
-    {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
     }
     
     //MARK: Text field method
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if searchOptions.isFirstResponder {
-            optionInput.isEnabled = false
-            optionInput.text = ""
-        } else {
-            searchOptions.isEnabled = false
+        switch textField {
+        case searchOptions:
+            activeTextField = 1
+            picker.reloadAllComponents()
+        case optionInput:
+            activeTextField = 2
+            picker.reloadAllComponents()
+        default:
+            activeTextField = 0
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if searchOptions.text != "View All Plants" {
-            searchOptions.isEnabled = true
-            optionInput.isEnabled = true
-        }
-        searchButtonState()
-    }
     
     //MARK: Search button state
     private func searchButtonState()  {
-        if searchOptions.text == "View All Plants" {
+        if searchOptions.text == options[2] {
             updateButtonColor(bool: true)
             searchButton.isEnabled = true
         } else if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
@@ -216,7 +204,6 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             searchButton.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         } else {
             searchButton.backgroundColor = UIColor.lightGray
-                //UIColor.init(red: 49.0/255.0, green: 49.0/255.0, blue: 49.0/255.0, alpha: 1.0)
         }
     }
     
@@ -227,12 +214,12 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         let option = searchOptions.text
         //updatae hidden option
         switch option {
-        case "By harvest time (weeks)":
+        case options[0]:
             optionLabel.text = "Choose expected harvest time"
             optionInput.placeholder = "pick expected harvest time"
             optionLabel.isHidden = false
             optionInput.isHidden = false
-        case "By available spacing (cm)":
+        case options[1]:
             optionLabel.text = "Choose available space size"
             optionInput.placeholder = "pick available space size"
             optionLabel.isHidden = false
@@ -242,8 +229,6 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             optionInput.isHidden = true
         }
     }
-    
-
     
     
     // MARK: - Navigation
@@ -256,25 +241,36 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        //pass massage
-        guard let nv = segue.destination as? UINavigationController else {
-            fatalError("cant get navigation controller")
-        }
+        guard let minHarvest = Int(user?.expectTime[0] ?? "0") else {fatalError("cant change min harvest to int")}
+        guard let maxHarvest = Int(user?.expectTime[1] ?? "0") else {fatalError("cant change max harvest to int")}
+        guard let minSpacing = Int(user?.useSpace[0] ?? "0") else {fatalError("cant change max harvest to int")}
+        guard let maxSpacing = Int(user?.expectTime[1] ?? "0") else {fatalError("cant change max harvest to int")}
         
-        guard  let searchVC = nv.topViewController as? SearchTableViewController else {
-            fatalError("Cant reach search table view controller")
-        }
-        
-        searchVC.user = user
-        
-        let filter = searchOptions.text
-        switch filter {
-        case "By harvest time (weeks)":
-            searchVC.filter = "harvestTime"
-        case "By available spacing (cm)":
-            searchVC.filter = "space"
-        default:
-            searchVC.filter = "all"
+        if minHarvest >= maxHarvest && searchOptions.text == options[0] {
+            uiAlert()
+        } else if minSpacing >= maxSpacing && searchOptions.text == options[1] {
+            uiAlert()
+        } else {
+            //pass massage
+            guard let nv = segue.destination as? UINavigationController else {
+                fatalError("cant get navigation controller")
+            }
+            
+            guard  let searchVC = nv.topViewController as? SearchTableViewController else {
+                fatalError("Cant reach search table view controller")
+            }
+            
+            searchVC.user = user
+            
+            let filter = searchOptions.text
+            switch filter {
+            case options[0]:
+                searchVC.filter = "harvestTime"
+            case options[1]:
+                searchVC.filter = "space"
+            default:
+                searchVC.filter = "all"
+            }
         }
         
     }
