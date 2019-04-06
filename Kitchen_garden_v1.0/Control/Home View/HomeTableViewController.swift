@@ -75,14 +75,46 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            plants.remove(at: indexPath.row)
-            savePlants()
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            plants.remove(at: indexPath.row)
+//            deleteConfirmation(indexPath.row)
+//            uiAlert()
+            
+            deleteConfirmation(indexPath)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
     
+    //MARK: Delete pop up confirmation
+    private func deleteConfirmation(_ indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete plant", message: "Are you sure you want to delete this plant ?", preferredStyle: UIAlertController.Style.actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
+            self.plants.remove(at: indexPath.row)
+            self.savePlants()
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: { (_) in
+            print("Delete dismiss")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+        
+    }
+    
+    private func uiAlert()  {
+        let alert = UIAlertController(title: "Wrong input", message: "Minimum number can not be smaller than or equal to maximum number", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
 
     /*
     // Override to support rearranging the table view.
