@@ -283,7 +283,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     private func uiAlert()  {
-        let alert = UIAlertController(title: "Wrong input", message: "Minimum number can not be smaller than or equal to maximum number", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Error", message: "Minimum number can not be smaller than or equal to maximum number", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
@@ -325,16 +325,6 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-    }
-    
-    //set status bar to white
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .lightContent
-//    }
-    
-    //set status bar to white for story board with navigation bar
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
     }
 
 }

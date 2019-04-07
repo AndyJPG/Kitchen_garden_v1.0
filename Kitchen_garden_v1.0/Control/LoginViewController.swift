@@ -128,7 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         case 0:
         alert = UIAlertController(title: "Error", message: "Please enter your name before we start", preferredStyle: UIAlertController.Style.alert)
         case 1:
-            alert = UIAlertController(title: "Error", message: "Please enter characters or number", preferredStyle: UIAlertController.Style.alert)
+            alert = UIAlertController(title: "Error", message: "Name can only have characters or number", preferredStyle: UIAlertController.Style.alert)
         default: break
         }
         

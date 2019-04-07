@@ -25,21 +25,10 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         super.viewDidLoad()
         
-        //Search bar code
-        // Setup the Search Controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Plant"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        
-        //needs to delete
-//        filter = "space"
-//        user = UserInfo(name: "andy", expectTime: ["0","50"], useSpace: ["0","10"])
-        
         //read data
         parsingJson()
         setNavigationBar()
+        setUpSearchBar()
         
         while plants.isEmpty {
             tableView.reloadData()
@@ -170,6 +159,18 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
     }
     
+    //MARK: Set up search bar
+    private func setUpSearchBar() {
+        //Search bar code
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Plant"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        UISearchBar.appearance().tintColor = UIColor.white
+    }
+    
     //MARK: Search bar update view method
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
@@ -218,6 +219,8 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.isTranslucent = false
     }
+    
+    
     
     //Set status to white
     override func viewDidAppear(_ animated: Bool) {

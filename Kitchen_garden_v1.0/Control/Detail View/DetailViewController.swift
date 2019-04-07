@@ -27,6 +27,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.delegate = self
         
         formPage()
+        setNavigationBar()
     }
     
     //MARK: Form detail page information
@@ -35,8 +36,8 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         if let plant = plant {
             //add attribute
             nameLable.text = plant.name
-            let space = "\(plant.minSpace) cm - \(plant.maxSpace) cm"
-            let harvestTime = "\(plant.minHarvest) - \(plant.maxHarvest) Weeks"
+            let space = "Plant Spacing\n\(plant.minSpace) cm - \(plant.maxSpace) cm"
+            let harvestTime = "Harvest time\n\(plant.minHarvest) - \(plant.maxHarvest) Weeks"
             collection = [space, harvestTime]
             
             //add color
@@ -102,7 +103,6 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Navigation
      
     @IBAction func cancel(_ sender: Any) {
-//        dismiss(animated: true, completion: nil)
         
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
         let isPresentingInAddMealMode = presentingViewController is UINavigationController
@@ -126,6 +126,18 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
             os_log("The button was not pressed", log: OSLog.default, type: .debug)
             return
         }
+    }
+    
+    //MARK: UI
+    private func setNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        navigationController?.navigationBar.isTranslucent = false
+        
+        //set background image
+        let bImage = UIImageView()
+        bImage.image = UIImage(named: "background")
+        bImage.contentMode = .scaleAspectFill
+        collectionView.backgroundView = bImage
     }
     
 }

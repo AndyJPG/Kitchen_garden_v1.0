@@ -21,8 +21,10 @@ class HomeTableViewController: UITableViewController {
         
         
         loadUserAndNVtitle()
+        
         //update ui
         setNavigationBarAndCell()
+        updateBackground()
         
     }
 
@@ -62,10 +64,6 @@ class HomeTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-//            plants.remove(at: indexPath.row)
-//            deleteConfirmation(indexPath.row)
-//            uiAlert()
             
             deleteConfirmation(indexPath)
             
@@ -122,6 +120,7 @@ class HomeTableViewController: UITableViewController {
             let selectedPlant = plants[indexPath.row]
             detailVC.plant = selectedPlant
             detailVC.navigationItem.rightBarButtonItem = nil
+            tableView.deselectRow(at: indexPath, animated: true)
             
         default: break
         }
@@ -137,21 +136,22 @@ class HomeTableViewController: UITableViewController {
         
         if let sourceViewController = sender.source as? DetailViewController, let plant = sourceViewController.plant {
 
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing plant.
-                plants[selectedIndexPath.row] = plant
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            }
-            else {
+//            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+//                // Update an existing plant.
+//                plants[selectedIndexPath.row] = plant
+//                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+//            }
+//            else {
                 // Add a new plant.
                 let newIndexPath = IndexPath(row: plants.count, section: 0)
 
                 plants.append(plant)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+//            }
             
             // Save the meals.
             savePlants()
+            updateBackground()
         }
         print("welcome back")
     }
@@ -175,15 +175,20 @@ class HomeTableViewController: UITableViewController {
     private func setNavigationBarAndCell() {
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         
-        navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.isTranslucent = false
         tableView.separatorStyle = .none
-        tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
     }
     
-    //Set status to white
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
+    private func updateBackground() {
+        if plants.isEmpty {
+            let image1 = UIImageView(image: UIImage(named: "background1"))
+            image1.contentMode = .scaleAspectFill
+            tableView.backgroundView = image1
+        } else {
+            let image2 = UIImageView(image: UIImage(named: "background"))
+            image2.contentMode = .scaleAspectFill
+            tableView.backgroundView = image2
+        }
     }
     
     //MARK: Load and change navigation title
@@ -206,6 +211,7 @@ class HomeTableViewController: UITableViewController {
             self.plants.remove(at: indexPath.row)
             self.savePlants()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.updateBackground()
         }))
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: { (_) in
