@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,15 +18,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch image" translatesAutoresizingMaskIntoConstraints="NO" id="Yh6-q3-vKA">
-                                <rect key="frame" x="0.0" y="28" width="375" height="639"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BdD-fi-aL8"/>
-                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="DVf-Za-Obp"/>
-                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RAn-V6-V75"/>
-                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="WJ2-9N-qut"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Yh6-q3-vKA" secondAttribute="bottom" id="Jok-Su-eS9"/>
+                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="hhb-R6-s6u"/>
+                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qHF-Qn-h7e"/>
+                            <constraint firstItem="Yh6-q3-vKA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="sbR-mL-VIR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -38,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch image" width="436.5" height="828"/>
+        <image name="launch image" width="1212.6666259765625" height="2269.666748046875"/>
     </resources>
 </document>

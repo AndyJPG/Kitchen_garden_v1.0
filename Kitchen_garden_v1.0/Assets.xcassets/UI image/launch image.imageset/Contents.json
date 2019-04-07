@@ -6,11 +6,11 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "png-welpage-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "eps-welpage.jpg",
       "scale" : "3x"
     }
   ],

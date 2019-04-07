@@ -98,6 +98,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
         print("You selected cell #\(indexPath.item)!")
+        uiAlert(indexPath.item)
     }
     
 
@@ -131,22 +132,45 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     @IBAction func addButton(_ sender: Any) {
-        uiAlert()
+        uiAlert(2)
     }
     
     //MARK: Ui alert message
-    private func uiAlert() {
+    private func uiAlert(_ alertCase: Int) {
         guard let name = plant?.name else {fatalError("cant find plant name")}
-        let alert = UIAlertController(title: "\(name) added", message: "You have added a new plant", preferredStyle: .alert)
+        var alert = UIAlertController()
         
-        present(alert, animated: true, completion: nil)
-        // change to desired number of seconds (in this case 2 seconds)
-        let when = DispatchTime.now() + 1.5
-        DispatchQueue.main.asyncAfter(deadline: when){
-            self.performSegue(withIdentifier: "unwindToHome", sender: self)
-            // your code with delay
-            alert.dismiss(animated: true, completion: nil)
+        switch alertCase {
+        case 0:
+            guard let minSpace = plant?.minSpace else {fatalError("cant convert min space")}
+            guard let maxSpace = plant?.maxSpace else {fatalError("cant convert max space")}
+            alert = UIAlertController(title: "Plant spacing", message: "\(name) requires minimum spacing of \(minSpace) cm to maximum \(maxSpace) cm between each plant.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                //Cancel Action
+            }))
+            present(alert, animated: true, completion: nil)
+        case 1:
+            guard let minHarvest = plant?.minHarvest else {fatalError("cant convert min harvest")}
+            guard let maxHarvest = plant?.maxHarvest else {fatalError("cant convert max harvest")}
+            alert = UIAlertController(title: "Haverst time", message: "\(name) will take between \(minHarvest) and \(maxHarvest) weeks to harvest.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                //Cancel Action
+            }))
+            present(alert, animated: true, completion: nil)
+        case 2:
+            alert = UIAlertController(title: "\(name) added", message: "You have added a new plant", preferredStyle: .alert)
+            
+            present(alert, animated: true, completion: nil)
+            // change to desired number of seconds (in this case 2 seconds)
+            let when = DispatchTime.now() + 1.5
+            DispatchQueue.main.asyncAfter(deadline: when){
+                self.performSegue(withIdentifier: "unwindToHome", sender: self)
+                // your code with delay
+                alert.dismiss(animated: true, completion: nil)
+            }
+        default: break
         }
+        
     }
     
     //MARK: UI

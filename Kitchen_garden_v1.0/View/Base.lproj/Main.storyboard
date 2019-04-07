@@ -138,8 +138,8 @@ Welcome to Oh! Farm.</string>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBI-W8-Yt0">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="64.5"/>
-                                                <string key="text">What's your
-Favorite search method?</string>
+                                                <string key="text">Please select
+your search preference</string>
                                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="28"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
