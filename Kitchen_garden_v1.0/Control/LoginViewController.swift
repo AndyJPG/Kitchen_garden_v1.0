@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     @IBOutlet weak var explore: UIButton!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var topSquare: UIView!
+    @IBOutlet weak var welcomLabel: UILabel!
     
 
     override func viewDidLoad() {
@@ -32,7 +33,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         
         //create to square view
         createView()
+        enableTapAway()
         
+        //Create background pictrue
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
     }
     
     //MARK: UITextFieldDelegate
@@ -98,7 +102,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
     
     //MARK: Ui view sqaure design
     func createView() {
-        
+        explore.titleLabel?.adjustsFontSizeToFitWidth = true
+        welcomLabel.adjustsFontSizeToFitWidth = true
         topSquare.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         topSquare.layer.shadowColor = UIColor.black.cgColor
         topSquare.layer.shadowOpacity = 0.4
@@ -147,8 +152,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         }
     }
     
+    private func enableTapAway() {
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
 }
 

@@ -42,8 +42,6 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             index += 5
         }
         
-        user = UserInfo(name: "Andy", expectTime: ["0","0"], useSpace: ["0","0"])
-        
         //update state
         searchButtonState()
         
@@ -175,6 +173,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         switch textField {
         case searchOptions:
             activeTextField = 1
+            optionInput.text = ""
             picker.reloadAllComponents()
         case optionInput:
             activeTextField = 2
@@ -315,6 +314,9 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         searchButton.layer.cornerRadius = 20
         searchButton.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        
+        //Create background pictrue
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
     }
     
     private func updateNVBarUI() {
@@ -325,6 +327,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        
     }
 
 }

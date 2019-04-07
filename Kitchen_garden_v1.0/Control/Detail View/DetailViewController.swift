@@ -65,6 +65,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
         cell.label.text = collection[indexPath.row]
         cell.label.textColor = UIColor.white
+        cell.label.sizeToFit()
         
         //customise cell shape
         cell.backgroundColor = cellColor[indexPath.row] // make cell more visible in our example project
@@ -125,6 +126,26 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         guard let button = sender as? UIBarButtonItem, button === addButton else {
             os_log("The button was not pressed", log: OSLog.default, type: .debug)
             return
+        }
+    }
+    
+    
+    @IBAction func addButton(_ sender: Any) {
+        uiAlert()
+    }
+    
+    //MARK: Ui alert message
+    private func uiAlert() {
+        guard let name = plant?.name else {fatalError("cant find plant name")}
+        let alert = UIAlertController(title: "\(name) added", message: "You have added a new plant", preferredStyle: .alert)
+        
+        present(alert, animated: true, completion: nil)
+        // change to desired number of seconds (in this case 2 seconds)
+        let when = DispatchTime.now() + 1.5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.performSegue(withIdentifier: "unwindToHome", sender: self)
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
         }
     }
     

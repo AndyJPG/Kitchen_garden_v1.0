@@ -19,7 +19,6 @@ class HomeTableViewController: UITableViewController {
 
         self.clearsSelectionOnViewWillAppear = false
         
-        
         loadUserAndNVtitle()
         
         //update ui
@@ -176,7 +175,7 @@ class HomeTableViewController: UITableViewController {
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         
         navigationController?.navigationBar.isTranslucent = false
-        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
     }
     
     private func updateBackground() {
