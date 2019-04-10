@@ -13,7 +13,7 @@ class HomeTableViewController: UITableViewController {
     //MARK: Properites
     var user: UserInfo?
     var plants = [Plant]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +42,19 @@ class HomeTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell else {
             fatalError("Unable getting UItable view cell")
         }
+        
+        //cell style
+        cell.backgroundColor = UIColor.clear
+        cell.cellBackground.layer.cornerRadius = 20
+        cell.cellBackground.layer.shadowColor = UIColor.black.cgColor
+        cell.cellBackground.layer.shadowOpacity = 0.4
+        cell.cellBackground.layer.shadowOffset = CGSize.zero
+        cell.cellBackground.layer.shadowRadius = 4
+        cell.plantImage.layer.cornerRadius = 20
+        // change cell select color
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clear
+        cell.selectedBackgroundView = backgroundView
         
         let plant = plants[indexPath.row]
         cell.name.text = plant.name
@@ -118,7 +131,8 @@ class HomeTableViewController: UITableViewController {
             
             let selectedPlant = plants[indexPath.row]
             detailVC.plant = selectedPlant
-            detailVC.navigationItem.rightBarButtonItem = nil
+            detailVC.displayButton = false
+            //detailVC.addToMyFarm.isEnabled = false
             tableView.deselectRow(at: indexPath, animated: true)
             
         default: break
@@ -175,10 +189,11 @@ class HomeTableViewController: UITableViewController {
     
     //MARK: UI
     private func setNavigationBarAndCell() {
+        tableView.separatorStyle = .none
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
-        
         navigationController?.navigationBar.isTranslucent = false
         tableView.tableFooterView = UIView()
+        
     }
     
     private func updateBackground() {

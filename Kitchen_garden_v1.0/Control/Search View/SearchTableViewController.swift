@@ -254,7 +254,9 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
     
     private func setTableViewCell() {
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        let image2 = UIImageView(image: UIImage(named: "background"))
+        image2.contentMode = .scaleAspectFill
+        tableView.backgroundView = image2
     }
     
     

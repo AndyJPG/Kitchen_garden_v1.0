@@ -25,7 +25,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     var activeTextField = 0
     
     var numbers = [["min"],["0"],["max"],["0"]]
-    let options = ["By harvest time (weeks)", "By available spacing (cm)", "View All Plants"]
+    let options = ["By harvest time (weeks)", "By available spacing (cm)"]
     
     
     override func viewDidLoad() {
@@ -187,10 +187,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     //MARK: Search button state
     private func searchButtonState()  {
-        if searchOptions.text == options[2] {
-            updateButtonColor(bool: true)
-            searchButton.isEnabled = true
-        } else if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
+        if (searchOptions.text?.isEmpty ?? true) || (optionInput.text?.isEmpty ?? true) {
             updateButtonColor(bool: false)
             searchButton.isEnabled = false
         } else {
@@ -250,35 +247,46 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         guard let minSpacing = Int(user?.useSpace[0] ?? "0") else {fatalError("cant change max harvest to int")}
         guard let maxSpacing = Int(user?.useSpace[1] ?? "0") else {fatalError("cant change max harvest to int")}
         
-        if minHarvest >= maxHarvest && searchOptions.text == options[0] {
-            uiAlert()
-        } else if minSpacing >= maxSpacing && searchOptions.text == options[1] {
-            uiAlert()
-        } else {
-            //pass massage
-            guard let nv = segue.destination as? UINavigationController else {
-                fatalError("cant get navigation controller")
-            }
-            
-            guard  let searchVC = nv.topViewController as? SearchTableViewController else {
-                fatalError("Cant reach search table view controller")
-            }
-            
-            searchVC.user = user
-            
-            let filter = searchOptions.text
-            switch filter {
-            case options[0]:
-                searchVC.filter = "harvestTime"
-            case options[1]:
-                searchVC.filter = "space"
-            default:
-                searchVC.filter = "all"
-            }
+        //pass massage
+        guard let nv = segue.destination as? UINavigationController else {
+            fatalError("cant get navigation controller")
         }
         
+        guard  let searchVC = nv.topViewController as? SearchTableViewController else {
+            fatalError("Cant reach search table view controller")
+        }
+        
+        if activeTextField != 3 {
+            print(activeTextField)
+            if minHarvest >= maxHarvest && searchOptions.text == options[0] {
+                uiAlert()
+            } else if minSpacing >= maxSpacing && searchOptions.text == options[1] {
+                uiAlert()
+            } else {
+                
+                searchVC.user = user
+                
+                let filter = searchOptions.text
+                switch filter {
+                case options[0]:
+                    searchVC.filter = "harvestTime"
+                case options[1]:
+                    searchVC.filter = "space"
+                default:
+                    searchVC.filter = "all"
+                }
+            }
+        } else {
+            searchVC.user = user
+            searchVC.filter = "all"
+        }
     }
     
+    //View all plants action
+    @IBAction func viewAllPlant(_ sender: Any) {
+        activeTextField = 3
+        performSegue(withIdentifier: "goSearch", sender: self)
+    }
     
     //MARK: save user data
     private func saveUserInfo() {

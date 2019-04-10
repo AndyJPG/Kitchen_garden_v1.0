@@ -13,13 +13,15 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //MARK: Properties
     var plant: Plant?
+    var displayButton = true
     var collection = [String]()
     var cellColor = [UIColor]()
     var cellIcon = [String]()
     @IBOutlet weak var nameLable: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var plantImage: UIImageView!
-    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var detailBackground: UIView!
+    @IBOutlet weak var addToMyFarm: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         formPage()
         setNavigationBar()
+        setPageUI()
     }
     
     //MARK: Form detail page information
@@ -39,11 +42,6 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
             let space = "Plant Spacing\n\(plant.minSpace) cm - \(plant.maxSpace) cm"
             let harvestTime = "Harvest time\n\(plant.minHarvest) - \(plant.maxHarvest) Weeks"
             collection = [space, harvestTime]
-            
-            //add color
-            let color1 = UIColor.init(red: 254/255, green: 127/255, blue: 45/255, alpha: 1.0)
-            let color2 = UIColor.init(red: 87/255, green: 156/255, blue: 135/255, alpha: 1.0)
-            cellColor = [color1, color2]
             
             //add image
             cellIcon = ["space","harvest"]
@@ -64,11 +62,10 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
         cell.label.text = collection[indexPath.row]
-        cell.label.textColor = UIColor.white
+        cell.label.textColor = UIColor.init(red: 252/255, green: 102/255, blue: 0/255, alpha: 1.0)
         cell.label.sizeToFit()
         
         //customise cell shape
-        cell.backgroundColor = cellColor[indexPath.row] // make cell more visible in our example project
         cell.icon.image = UIImage(named: cellIcon[indexPath.row])
         
         return cell
@@ -76,7 +73,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //MARK: custom collection cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width / 2
+        let width = view.frame.width / 2 - 40
         return CGSize(width: width, height: width)
     }
     
@@ -103,7 +100,6 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     
 
     // MARK: - Navigation
-     
     @IBAction func cancel(_ sender: Any) {
         
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
@@ -120,19 +116,21 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    //Perfrom adding plant
+    @IBAction func addPlant(_ sender: Any) {
+        uiAlert(2)
+        performSegue(withIdentifier: "unwindToHome", sender: self)
+    }
+    
+    //Prepare for data passing
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
         //Configure the destination view controller when save button is pressed
-        guard let button = sender as? UIBarButtonItem, button === addButton else {
+        guard let button = sender as? UIButton, button === addToMyFarm else {
             os_log("The button was not pressed", log: OSLog.default, type: .debug)
             return
         }
-    }
-    
-    
-    @IBAction func addButton(_ sender: Any) {
-        uiAlert(2)
     }
     
     //MARK: Ui alert message
@@ -177,12 +175,23 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
     private func setNavigationBar() {
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
         navigationController?.navigationBar.isTranslucent = false
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+    }
+    
+    private func setPageUI() {
+        plantImage.layer.cornerRadius = 20
+        detailBackground.layer.cornerRadius = 20
+        addToMyFarm.layer.cornerRadius = 20
+        addToMyFarm.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        detailBackground.layer.shadowColor = UIColor.black.cgColor
+        detailBackground.layer.shadowOpacity = 0.4
+        detailBackground.layer.shadowOffset = CGSize.zero
+        detailBackground.layer.shadowRadius = 4
         
-        //set background image
-        let bImage = UIImageView()
-        bImage.image = UIImage(named: "background")
-        bImage.contentMode = .scaleAspectFill
-        collectionView.backgroundView = bImage
+        if !displayButton {
+            addToMyFarm.isHidden = true
+            detailBackground.bottomAnchor.constraint(equalTo: detailBackground.bottomAnchor, constant: +60).isActive = true
+        }
     }
     
 }

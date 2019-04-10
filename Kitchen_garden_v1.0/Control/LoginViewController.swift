@@ -28,6 +28,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         if let userInfo = loadUser() {
             user = userInfo[0]
         }
+        
+        if user != nil {
+            DispatchQueue.main.async(){
+                self.performSegue(withIdentifier: "goHomePage", sender: self)
+            }
+        }
                 
 //        updateButtonState()
         
