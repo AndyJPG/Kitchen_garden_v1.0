@@ -132,26 +132,29 @@ class HomeTableViewController: UITableViewController {
     
     //MARK: Unwind method
     @IBAction func unwindToHome(sender: UIStoryboardSegue) {
-        
-        if let sourceViewController = sender.source as? DetailViewController, let plant = sourceViewController.plant {
-
-//            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-//                // Update an existing plant.
-//                plants[selectedIndexPath.row] = plant
-//                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-//            }
-//            else {
-                // Add a new plant.
+                
+        if sender.identifier == "toHomeFromSearch" {
+            if let sourceViewController = sender.source as? SearchTableViewController, let plant = sourceViewController.selectedPlant {
+                
                 let newIndexPath = IndexPath(row: plants.count, section: 0)
-
+                
                 plants.append(plant)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
-//            }
-            
-            // Save the meals.
-            savePlants()
-            updateBackground()
+            }
+        } else {
+            if let sourceViewController = sender.source as? DetailViewController, let plant = sourceViewController.plant {
+                
+                let newIndexPath = IndexPath(row: plants.count, section: 0)
+                
+                plants.append(plant)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                
+            }
         }
+        
+        savePlants()
+        updateBackground()
+        
         print("welcome back")
     }
     
@@ -198,7 +201,11 @@ class HomeTableViewController: UITableViewController {
         }
         
         if let user = user {
-            navigationItem.title = "\(user.name)'s Farm"
+            if user.name == "Your" {
+                navigationItem.title = "\(user.name) Farm"
+            } else {
+                navigationItem.title = "\(user.name)'s Farm"
+            }
         }
     }
     

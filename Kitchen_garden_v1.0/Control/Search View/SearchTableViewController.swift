@@ -9,11 +9,12 @@
 import UIKit
 import os.log
 
-class SearchTableViewController: UITableViewController, UISearchControllerDelegate {
-    
+class SearchTableViewController: UITableViewController, UISearchControllerDelegate, SearchTableViewCellDelegate {
+
     //MARK: Properties
     var plants = [Plant]()
     var filter: String?
+    var selectedPlant: Plant?
     var user: UserInfo?
     let plantURL = URL(string: "http://3.84.249.169/serviceTime.php")
     
@@ -29,6 +30,7 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         parsingJson()
         setNavigationBar()
         setUpSearchBar()
+        setTableViewCell()
         
         while plants.isEmpty {
             tableView.reloadData()
@@ -90,7 +92,6 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         return plants.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Cell Identifier
@@ -100,7 +101,28 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? SearchTableViewCell else {
             fatalError("The dequeued cell is not an instance of SearchTableViewCell.")
         }
-
+        
+        //Cell style
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.cellBackground.layer.cornerRadius = 20
+        cell.cellBackground.layer.shadowColor = UIColor.black.cgColor
+        cell.cellBackground.layer.shadowOpacity = 0.4
+        cell.cellBackground.layer.shadowOffset = CGSize.zero
+        cell.cellBackground.layer.shadowRadius = 4
+        cell.pImage.layer.cornerRadius = 20
+        cell.plusButtonBackground.layer.cornerRadius = 20
+        cell.plusButtonBackground.backgroundColor = UIColor.init(red: 96/255, green: 186/255, blue: 114/255, alpha: 1.0)
+        cell.plusButtonBackground.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMinYCorner]
+        cell.infoLabel.textColor = UIColor.init(red: 252/255, green: 102/255, blue: 0/255, alpha: 1.0)
+        cell.harvestLabel.textColor = UIColor.init(red: 252/255, green: 102/255, blue: 0/255, alpha: 1.0)
+        //change cell select color
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clear
+        cell.selectedBackgroundView = backgroundView
+        //cell add button connection
+        cell.cellDelegate = self
+        cell.addButton.tag = indexPath.row
+        
         // Configure the cell
         if isFiltering() {
             plant = filteredPlants[indexPath.row]
@@ -119,6 +141,13 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
 
         return cell
     }
+    
+    //cell pressed function from protocol
+    func didPressButton(_ tag: Int) {
+        print("I have pressed a button with a tag: \(tag)")
+        addConfirmation(tag)
+        
+    }
 
     
     // MARK: - Navigation
@@ -133,28 +162,30 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         
         super.prepare(for: segue, sender: sender)
         
-        guard let detailNV = segue.destination as? UINavigationController else {
-            fatalError("Unexpected destination: \(segue.destination)")
-        }
-        
-        guard let detailVC = detailNV.topViewController as? DetailViewController else {
-            fatalError("Unexpected destination: \(String(describing: detailNV.topViewController))")
-        }
-        
-        guard let selectedPlantCell = sender as? SearchTableViewCell else {
-            fatalError("Unexpected sender: \(String(describing: sender))")
-        }
-        
-        guard let indexPath = tableView.indexPath(for: selectedPlantCell) else {
-            fatalError("The selected cell is not being displayed by the table")
-        }
-        
-        if isFiltering() {
-            let selecdPlant = filteredPlants[indexPath.row]
-            detailVC.plant = selecdPlant
-        } else {
-            let selectedPlant = plants[indexPath.row]
-            detailVC.plant = selectedPlant
+        if segue.identifier == "searchToDetail" {
+            guard let detailNV = segue.destination as? UINavigationController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let detailVC = detailNV.topViewController as? DetailViewController else {
+                fatalError("Unexpected destination: \(String(describing: detailNV.topViewController))")
+            }
+            
+            guard let selectedPlantCell = sender as? SearchTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedPlantCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            if isFiltering() {
+                let selecdPlant = filteredPlants[indexPath.row]
+                detailVC.plant = selecdPlant
+            } else {
+                let selectedPlant = plants[indexPath.row]
+                detailVC.plant = selectedPlant
+            }
         }
         
     }
@@ -167,6 +198,7 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Plant"
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         UISearchBar.appearance().tintColor = UIColor.white
     }
@@ -220,6 +252,10 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
         navigationController?.navigationBar.isTranslucent = false
     }
     
+    private func setTableViewCell() {
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+    }
     
     
     //Set status to white
@@ -229,6 +265,34 @@ class SearchTableViewController: UITableViewController, UISearchControllerDelega
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    //MARK: Alert for adding plant
+    private func addConfirmation(_ tag: Int) {
+        var alert = UIAlertController()
+        if isFiltering() {
+            alert = UIAlertController(title: "\(filteredPlants[tag].name)", message: "Are you sure you want to add this plant ?", preferredStyle: UIAlertController.Style.actionSheet)
+            alert.addAction(UIAlertAction(title: "Add plant", style: UIAlertAction.Style.default, handler: { (_) in
+                self.selectedPlant = self.filteredPlants[tag]
+                self.performSegue(withIdentifier: "toHomeFromSearch", sender: self)
+            }))
+        } else {
+            alert = UIAlertController(title: "\(plants[tag].name)", message: "Are you sure you want to add this plant ?", preferredStyle: UIAlertController.Style.actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Add plant", style: UIAlertAction.Style.default, handler: { (_) in
+                self.selectedPlant = self.plants[tag]
+                self.performSegue(withIdentifier: "toHomeFromSearch", sender: self)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: { (_) in
+            print("Delete dismiss")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+        
     }
 
 }

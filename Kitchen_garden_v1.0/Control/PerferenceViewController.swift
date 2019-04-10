@@ -17,6 +17,7 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var optionLabel: UILabel!
     @IBOutlet weak var topSquare: UIView!
+    @IBOutlet weak var dropdown: UIImageView!
     
     var user: UserInfo?
     //for picker
@@ -207,9 +208,10 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     private func updateHiddenOption() {
-        optionLabel.isHidden = true
-        optionInput.isHidden = true
-        
+//        optionLabel.isHidden = true
+//        optionInput.isHidden = true
+//
+//
         let option = searchOptions.text
         //updatae hidden option
         switch option {
@@ -218,14 +220,17 @@ class PerferenceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             optionInput.placeholder = "pick expected harvest time"
             optionLabel.isHidden = false
             optionInput.isHidden = false
+            dropdown.isHidden = false
         case options[1]:
             optionLabel.text = "Choose available space size"
             optionInput.placeholder = "pick available space size"
             optionLabel.isHidden = false
             optionInput.isHidden = false
+            dropdown.isHidden = false
         default:
             optionLabel.isHidden = true
             optionInput.isHidden = true
+            dropdown.isHidden = true
         }
     }
     

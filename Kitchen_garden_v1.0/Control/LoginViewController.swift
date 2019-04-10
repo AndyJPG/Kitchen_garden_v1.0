@@ -81,6 +81,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIAlertViewDel
         
     }
     
+    //MARK: Skip button
+    @IBAction func skipButton(_ sender: Any) {
+        if user == nil {
+            user = UserInfo(name: "Your", expectTime: ["0","0"], useSpace: ["0","0"])
+        }
+        performSegue(withIdentifier: "goHomePage", sender: self)
+    }
+    
+    
     //MARK: Private method
 //    private func updateButtonState() {
 //        let text = nameField.text ?? ""
